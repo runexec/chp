@@ -3,7 +3,7 @@ Clojure web routing and template framework based on Compojure
 
 You can <br />
 * Embed Clojure into a HTML file with the ```<clojure></clojure>``` tags
-* Enable dynamic route method handling (get, post, put, delete, and head)
+* Enable multiple method handlers under a single route (get, post, put, delete, and head)
 
 
 #### Getting started
