@@ -66,7 +66,9 @@
         placements (-> (list (re-seq #"<clojure>.*</clojure>" _)
                              (re-seq #"<clojure>\s+.*\s+</clojure>" _))
                        flatten
-                       distinct)
+                       distinct
+                       ((fn [x]
+                          (filter #(not= nil %) x))))
         get-clj #(-> (str %)
                      (string/split #"<clojure>")
                      last
@@ -76,9 +78,8 @@
                           :return (with-out-str
                                     (->> %
                                          get-clj
-                                        (str "(ns chp.handler)")
-                                        load-string
-                                        str))})
+                                         (str "(ns chp.handler) ")
+                                         load-string))})
                     placements)]
     (loop [body _
            values values]

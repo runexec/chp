@@ -1,9 +1,15 @@
+<clojure>(declare ^:dynamic *words*)</clojure>
 <html>
 <head>
 <title><clojure>(println *title*)</clojure></title>
 </head>
 <body>
+
 <clojure> 
   (doseq [x [1 2 3]] (println  "CHP Line " x "<br />"))
+</clojure>
+
+<clojure>
+  (binding [*words* "some words"] (println *words*))
 </clojure>
 </body>
