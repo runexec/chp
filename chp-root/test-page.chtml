@@ -5,6 +5,13 @@
 </head>
 <body>
 
+<p>
+Method: <clojure>(println ($ method))</clojure><br />
+Path: <clojure>(println ($ uri))</clojure><br />
+Params: <clojure>(println ($ params))</clojure><br />
+</p>
+
+
 <clojure> 
   (doseq [x [1 2 3]] (println  "CHP Line " x "<br />"))
 </clojure>
@@ -23,6 +30,5 @@
 
   (dotimes [_ 3]
     (println (text-input _ (str "value=" _)))))
-
 </clojure>
 </body>
