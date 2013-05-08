@@ -58,5 +58,5 @@ The following link is the chtml page that is used in the example below.
 
 (def app
   (handler/site app-routes))
-```clojure
+```
 
