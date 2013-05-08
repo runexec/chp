@@ -9,7 +9,20 @@
   (doseq [x [1 2 3]] (println  "CHP Line " x "<br />"))
 </clojure>
 
-<clojure>
-  (binding [*words* "some words"] (println *words*))
+<clojure> 
+(binding [*words* "some words"] (println *words* "<br />"))
+
+(let [text-input (fn [name value]
+                   (format (str "<label>%s</label><br />"
+                                "<input type=\"text\""
+                                "name=\"%s\""
+                                "value=\"%s\" /><br />")
+                           name
+                           name
+                           value))]
+
+  (dotimes [_ 3]
+    (println (text-input _ (str "value=" _)))))
+
 </clojure>
 </body>

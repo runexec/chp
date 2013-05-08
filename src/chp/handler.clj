@@ -63,12 +63,9 @@
   "Parses chtml files"
   [path]
   (let [_ (slurp path)
-        placements (-> (list (re-seq #"<clojure>.*</clojure>" _)
-                             (re-seq #"<clojure>\s+.*\s+</clojure>" _))
-                       flatten
-                       distinct
-                       ((fn [x]
-                          (filter #(not= nil %) x))))
+        placements (distinct (re-seq
+                              #"(?is)<clojure>.*?</clojure>"
+                              _))
         get-clj #(-> (str %)
                      (string/split #"<clojure>")
                      last
@@ -81,6 +78,7 @@
                                          (str "(ns chp.handler) ")
                                          load-string))})
                     placements)]
+    (println "DEBUG: " (first placements))
     (loop [body _
            values values]
       (if-not (seq values)
