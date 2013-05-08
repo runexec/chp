@@ -78,7 +78,6 @@
                                          (str "(ns chp.handler) ")
                                          load-string))})
                     placements)]
-    (println "DEBUG: " (first placements))
     (loop [body _
            values values]
       (if-not (seq values)
