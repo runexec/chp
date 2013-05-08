@@ -1,4 +1,4 @@
-# CHP
+#### CHP
 Clojure web routing and template framework based on Compojure
 
 You can <br />
@@ -6,7 +6,7 @@ You can <br />
 * Enable dynamic route method handling (get, post, put, delete, and head)
 
 
-# Getting started
+#### Getting started
 
 1) Download & Run
 
@@ -18,7 +18,7 @@ lein ring server
 
 2) Edit the default app-routes template located at the bottom of src/chp/handler.clj
 
-# How?
+#### How?
 
 By default, the CHTML files are located in chp-root folder of the project folder.
 When a CHTML file is parsed, all public variables of the chp.handler namespace
@@ -26,7 +26,7 @@ are accessible during the evaluation of the <clojure>/clojure> tags. Use print
  or println within the tags to have the results displayed.
 
 
-# Example CHTML & Routes
+#### Example CHTML & Routes
 
 The following link is the chtml page that is used in the example below. 
 <a href="https://github.com/runexec/chp/blob/master/chp-root/test-page.chtml">
