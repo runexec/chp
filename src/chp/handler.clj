@@ -105,6 +105,10 @@
 
 (defn chtmls [] (chp-dir root-path))    
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Routes
+
 (defroutes app-routes
   (chp-route "/chtml" 
              (binding [*title* "Test Page Example"]
