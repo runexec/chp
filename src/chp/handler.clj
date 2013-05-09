@@ -1,5 +1,6 @@
 (ns chp.handler
-  (:use compojure.core)
+  (:use compojure.core
+        chp.html)
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [clojure.string :as string]))

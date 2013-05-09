@@ -17,18 +17,16 @@ Params: <clojure>(println ($ params))</clojure><br />
 </clojure>
 
 <clojure> 
+(dotimes [_ 3]
+  (println
+   (str (text-field
+         (escape (str "field-" _))
+         (escape
+          (str "Field >" _)))
+        "<br />"))
+  (println
+   (str (check-box (escape _) true)
+        "<br />")))
 (binding [*words* "some words"] (println *words* "<br />"))
-
-(let [text-input (fn [name value]
-                   (format (str "<label>%s</label><br />"
-                                "<input type=\"text\""
-                                "name=\"%s\""
-                                "value=\"%s\" /><br />")
-                           name
-                           name
-                           value))]
-
-  (dotimes [_ 3]
-    (println (text-input _ (str "value=" _)))))
 </clojure>
 </body>
