@@ -22,7 +22,7 @@ lein ring server
 
 By default, the CHTML files are located in chp-root folder of the project folder.
 When a CHTML file is parsed, all public variables of the chp.handler namespace
-are accessible during the evaluation of the ```<clojure>/clojure>``` tags. Use print
+are accessible during the evaluation of the ```<clojure></clojure>``` tags. Use print
  or println within the tags to have the results displayed.
 
 
