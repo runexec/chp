@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <title>
+      <clojure>
+	(let [title "ClojureHomePage - INFO - [Clojure %s]"
+              title (escape
+                     (format title (clojure-version)))]
+          (println title))
+      </clojure>
+    </title>
+    <style>
+      body { background: black;
+      color: yellow;
+      max-width: 50%;}
+      div { margin-left: auto;
+      margin-right; auto; }
+      b { size: 14px; color: white; } 
+    </style>
+  </head>
+  <body>
+    <div>
+      <b>Clojure Version</b><br />
+      <clojure>
+        (-> (clojure-version)
+            escape
+            (str "<br />")
+            println)
+      </clojure><br />
+      <b>CHP Namespace</b><br />
+      <clojure>
+        (-> *ns*
+            escape
+            (str "<br />")
+            println)
+      </clojure><br />
+      <b>CHP Absolute Root Path</b><br />
+      <clojure>
+        (-> root-path
+            clojure.java.io/file
+            .getAbsolutePath
+            escape
+            (println "<br /><br />"))
+      </clojure>
+      <b>Public Symbols</b><br />
+      <clojure>
+        (->> *ns*
+             ns-publics
+             keys
+             (map #(-> % str escape))
+             (interpose "<br />")
+             (apply str)
+             println)
+      </clojure>
+      <br /><br />
+      <b>Detected CHTMLs</b><br />
+      <clojure>
+        (doseq [_ (chtmls)
+                :let [chtml (escape _)]]
+          (println
+           (str chtml "<br />")))
+      </clojure>
+      <br /><br />
+      <b>JVM</b><br />
+      <clojure>
+        (let [properties (filter #(.contains % "java") 
+                                 (keys (System/getProperties)))]
+          (doseq [_ properties]
+            (println 
+             (format "[%s] = %s<br />"
+                     _ (-> _
+                           System/getProperty
+                           escape))))
+          (println "<br />"))
+      </clojure>
+  </body>
+</html>

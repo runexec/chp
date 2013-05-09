@@ -125,6 +125,9 @@
                            (str "chp-body wasn't used to access "
                                 ($ uri)))
                  "Not Found"))
+  (chp-route "/chp"
+             (or (chp-parse (str root-path "chp-info.chtml"))
+                 "error"))
   (route/resources "/")
   (route/not-found "Not Found"))
 
