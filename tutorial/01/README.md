@@ -1,6 +1,6 @@
 # Tutorial 1
 
-By the end of this tutorial you should beable to do the following
+By the end of this tutorial you should be able to do the following
 * create a CHP project
 * create a CHP CHTML page
 * define a CHP route
