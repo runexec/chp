@@ -5,6 +5,8 @@ You can <br />
 * Embed Clojure into a HTML file with the ```<clojure></clojure>``` tags
 * Enable multiple method handlers under a single route (get, post, put, delete, and head)
 
+<p>This page serves as project documentation.</p>
+[This page is a tutorial](https://github.com/runexec/chp/tree/master/tutorial/01)
 
 #### Getting started
 
