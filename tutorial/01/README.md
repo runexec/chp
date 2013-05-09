@@ -17,6 +17,8 @@ You should copy the chp folder into another folder holding the name of your proj
 mkdir hello-world
 cp -r chp/ hello-world/
 tree -d hello-world/
+```
+<pre>
 hello-world/
 └── chp
     ├── chp-root
@@ -32,7 +34,8 @@ hello-world/
     │       └── test
     └── tutorial
         └── 01
-```
+</pre>
+
 3. Your hello-world CHP project is now setup correctly and you can run the ring server.
 ```bash
 cd hello-world/chp/; lein ring server
@@ -58,7 +61,7 @@ Started server on port 3000
 ```
 3. To access this blank page, you can visit http://localhost:3000/chtml
 4. Let's give this page an interesting title.
-```html
+```
 <html>
   <head>
     <title>
@@ -113,10 +116,7 @@ Started server on port 3000
 1. Now that you've created your own CHTML page, let's start to give it a better route by opening the file ```hello-world/chp/src/chp/handler.clj```
 2. You'll want to scroll to the very bottom of the file or until you see ```(defroutes app-routes ...)```
 3. Listed here are all the possible ways to make a CHP route, but we only need a simple one this example.
-<p>Currently, this is what the default CHP routes look like</p>
 ```clojure
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Routes
-
 (defroutes app-routes
   (chp-route "/chtml" 
              (binding [*title* "Test Page Example"]
