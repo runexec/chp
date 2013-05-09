@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>
+      <clojure>
+	(println 
+         (format "%s's ClojureHomePage!"
+                 (escape
+                  (System/getProperty "user.name"))))
+      </clojure>
+    </title>
+  </head>
+  <body>
+    <table>
+      <tr>
+	<td><h1>System Property</h1></td>
+	<td><h1>Property Value</h1></td>
+      </tr>
+      <clojure>
+	(doseq [_ (System/getProperties)
+                :let [k (key _) 
+                      v (System/getProperty k)]]
+          (println 
+           (format "<tr><td>%s</td><td>%s</td>"
+                   (escape k)
+                   (escape v))))
+      </clojure>
+    </table>
+  </body>
+</html>
