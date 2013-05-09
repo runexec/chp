@@ -61,15 +61,16 @@ Started server on port 3000
 ```
 3. To access this blank page, you can visit http://localhost:3000/chtml
 4. Let's give this page an interesting title.
-```
+
+```html
 <html>
   <head>
     <title>
       <clojure>
-      (println 
+	(println 
          (format "%s's ClojureHomePage!"
                  (escape
-                  (System/getProperty "user.name"))))
+                  (System/getProperty "user.name")))
       </clojure>
     </title>
   </head>
@@ -77,6 +78,7 @@ Started server on port 3000
   </body>
 </html>
 ```
+
  If you did everything correctly, the title should display your current
  logged in username before displaying "ClojureHomePage!".
 5. Now let's have a little fun with the CHTML body.
