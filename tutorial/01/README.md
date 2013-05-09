@@ -13,6 +13,7 @@ git clone https://github.com/runexec/chp
 ```
 2. CHP now sits in the directory chp, but you do not want to modify this copy. 
 You should copy the chp folder into another folder holding the name of your project.
+
 ```bash
 mkdir hello-world
 cp -r chp/ hello-world/
@@ -37,6 +38,7 @@ hello-world/
 </pre>
 
 3. Your hello-world CHP project is now setup correctly and you can run the ring server.
+
 ```bash
 cd hello-world/chp/; lein ring server
 2013-05-09 12:46:45.889:INFO:oejs.Server:jetty-7.6.1.v20120215
@@ -48,7 +50,6 @@ Started server on port 3000
 
 1. First thing we're going to do is delete the contents of ```hello-world/chp-root/test-file.chtml```
 2. In the same file, paste the following HTML code into the CHTML file.
-```html
 
 ```html
 <html>
@@ -59,6 +60,7 @@ Started server on port 3000
   </body>
 </html>
 ```
+
 3. To access this blank page, you can visit http://localhost:3000/chtml
 4. Let's give this page an interesting title.
 
@@ -82,7 +84,8 @@ Started server on port 3000
  If you did everything correctly, the title should display your current
  logged in username before displaying "ClojureHomePage!".
 5. Now let's have a little fun with the CHTML body.
-```clojure
+
+```html
 <html>
   <head>
     <title>
@@ -113,6 +116,7 @@ Started server on port 3000
   </body>
 </html>
 ```
+
 #### Define a CHP route
 
 1. Now that you've created your own CHTML page, let's start to give it a better route by opening the file ```hello-world/chp/src/chp/handler.clj```
