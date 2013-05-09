@@ -20,12 +20,16 @@
 (defn global-uri [] (:uri *page*))
 
 (defmacro $ 
-  "To call (global-fn-name). ($ uri) is the
-   same as (global-uri)"
+  "To call (global-fn-name). ($ uri) is the  same as (global-uri)"
   [global-symbol]
   `(~(->> global-symbol
           (str "global-")
           symbol)))
+
+(defn env 
+  "Returns an environment variable value"
+  [-key-str]
+  (System/getProperty -key-str))
 
 (defmacro chp-route
   [path & body]

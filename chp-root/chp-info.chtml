@@ -67,9 +67,7 @@
           (doseq [_ properties]
             (println 
              (format "[%s] = %s<br />"
-                     _ (-> _
-                           System/getProperty
-                           escape))))
+                     _ (env  _))))
           (println "<br />"))
       </clojure>
   </body>
