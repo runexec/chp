@@ -118,6 +118,7 @@ Started server on port 3000
 1. Now that you've created your own CHTML page, let's start to give it a better route by opening the file ```hello-world/chp/src/chp/handler.clj```
 2. You'll want to scroll to the very bottom of the file or until you see ```(defroutes app-routes ...)```
 3. Listed here are all the possible ways to make a CHP route, but we only need a simple one this example.
+
 ```clojure
 (defroutes app-routes
   (chp-route "/chtml" 
@@ -139,7 +140,9 @@ Started server on port 3000
   (route/resources "/")
   (route/not-found "Not Found"))
 ```
+
 4. Let's make the simplest possible route we can for the location of "/"
+
 ```clojure
 (defroutes app-routes
   (chp-route "/"
@@ -148,6 +151,7 @@ Started server on port 3000
   (route/resources "/")
   (route/not-found "Not Found"))
 ```
+
 5. After saving the changes, point your browser to http://localhost:3000/
 
 <a href="test-page.chtml">Download the CHTML used in this tutorial</a>
