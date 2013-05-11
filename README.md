@@ -14,6 +14,7 @@ This page serves as project documentation.<br />
 5. [Clojure HTML Generation](https://github.com/runexec/CHP/#clojure-and-html)
 6. [Clojure and CSS Generation](https://github.com/runexec/CHP/#clojure-and-css)
 7. [Clojure and JavaScript Generation](https://github.com/runexec/CHP/#clojure-and-javascript-generation)
+8. [Clojure and SQL](https://github.com/runexec/CHP/#clojure-and-sql)
 
 #### Getting started
 
@@ -162,9 +163,6 @@ CHP uses the directory resources/cljs/ as the default cljs source code directory
 
 #### Clojure and SQL 
 
-ClojureHomePage uses the SQLKorma DSL by default.
+ClojureHomePage uses the SQLKorma DSL by default. korma.db is required as kdb and korma.core is required as kc
 
-<p>
-korma.db is required as kdb and korma.core is required as kc
-</p>
-1. [Korma](http://www.sqlkorma.com/)
+1. [Korma Documentation](http://www.sqlkorma.com/)
