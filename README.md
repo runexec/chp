@@ -1,5 +1,5 @@
 #### CHP [![endorse](https://api.coderwall.com/runexec/endorsecount.png)](https://coderwall.com/runexec)
-Clojure web routing and template framework based on Compojure
+ClojureHomePage is a Compojure based web framework that allows you to write the backend and frontend with Clojure.
 
 You can <br />
 * Embed Clojure into a HTML file with the ```<clojure></clojure>``` tags
