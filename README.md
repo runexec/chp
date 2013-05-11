@@ -6,7 +6,13 @@ You can <br />
 * Enable multiple method handlers under a single route (get, post, put, delete, and head)
 
 This page serves as project documentation.<br />
-=&gt; [This page is a tutorial](https://github.com/runexec/chp/tree/master/tutorial/01)
+
+1. [Tutorial](https://github.com/runexec/chp/tree/master/tutorial/01)
+2. [Install](https://github.com/JeremS/cljss-core)
+3. [How?](https://github.com/runexec/CHP/#how)
+4. [Example CHTML & Routes](https://github.com/runexec/CHP/#example-chtml--routes)
+5. [Clojure HTML Generation](https://github.com/runexec/CHP/#clojure-and-html)
+6. [Clojure and CSS Generation](#)
 
 #### Getting started
 
@@ -136,3 +142,11 @@ Please note that these forms DO NOT generate Hiccup code, but HTML.
 (unordered-list attr-map? coll)
 
 ```
+
+#### Clojure and CSS
+
+ClojureHomePage uses the Garden CSS generation library by default.
+The Garden documentation page is located at https://github.com/noprompt/garden
+<br />
+CHP CSS wrapper is located in the namespace chp.css and doesn't need to be displayed
+with the println form.
