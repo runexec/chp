@@ -13,7 +13,7 @@ This page serves as project documentation.<br />
 4. [Example CHTML & Routes](https://github.com/runexec/CHP/#example-chtml--routes)
 5. [Clojure HTML Generation](https://github.com/runexec/CHP/#clojure-and-html)
 6. [Clojure and CSS Generation](https://github.com/runexec/CHP/#clojure-and-css)
-7. [Clojure and JavaScript Generation](#)
+7. [Clojure and JavaScript Generation](https://github.com/runexec/CHP/#clojure-and-javascript-generation)
 
 #### Getting started
 
@@ -155,8 +155,7 @@ CHP CSS wrapper is located in the namespace chp.css.
 
 ClojureHomePage uses ClojureScript and lein-cljsbuild to generate javascript.
 CHP uses the directory resources/cljs/ as the default cljs source code directory.
-<p>
-[lein-cljsbuild Documentation](https://github.com/emezeske/lein-cljsbuild/)
-</p>
-[ClojureScript Documentation](https://github.com/clojure/clojurescript)
+
+1. [lein-cljsbuild Documentation](https://github.com/emezeske/lein-cljsbuild/)
+2. [ClojureScript Documentation](https://github.com/clojure/clojurescript)
 
