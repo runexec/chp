@@ -1,7 +1,7 @@
 (ns chp.handler
   (:use compojure.core
         chp.html
-        chp.css)
+        [garden.core :only [css]])
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [clojure.string :as string]

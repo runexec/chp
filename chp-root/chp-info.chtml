@@ -10,16 +10,18 @@
     </title>
     <script>
       <clojure>
-	(println (slurp "resources/public/js/main.js"))
+       (println (slurp "resources/public/js/main.js"))
       </clojure>
     </script>
     <style>
-      body { background: black;
-      color: yellow;
-      max-width: 50%;}
-      div { margin-left: auto;
-      margin-right; auto; }
-      b { size: 14px; color: white; } 
+      <clojure>
+      (println
+       (css [:body
+             {:background "#ABC"}])
+       (css [:b
+             {:font-size "30px"
+              :color "#EFF"}]))
+      </clojure>
     </style>
   </head>
   <body>

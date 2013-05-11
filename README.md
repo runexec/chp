@@ -149,9 +149,6 @@ Please note that these forms DO NOT generate Hiccup code, but HTML.
 
 ClojureHomePage uses the Garden CSS generation library by default.
 The Garden documentation page is located at https://github.com/noprompt/garden
-<p>
-CHP CSS wrapper is located in the namespace chp.css and is loaded by default.
-</p>
 
 #### Clojure and JavaScript Generation
 
