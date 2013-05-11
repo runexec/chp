@@ -148,8 +148,9 @@ Please note that these forms DO NOT generate Hiccup code, but HTML.
 
 ClojureHomePage uses the Garden CSS generation library by default.
 The Garden documentation page is located at https://github.com/noprompt/garden
-<br />
-CHP CSS wrapper is located in the namespace chp.css.
+<p>
+CHP CSS wrapper is located in the namespace chp.css and is loaded by default.
+</p>
 
 #### Clojure and JavaScript Generation
 
@@ -159,3 +160,11 @@ CHP uses the directory resources/cljs/ as the default cljs source code directory
 1. [lein-cljsbuild Documentation](https://github.com/emezeske/lein-cljsbuild/)
 2. [ClojureScript Documentation](https://github.com/clojure/clojurescript)
 
+#### Clojure and SQL 
+
+ClojureHomePage uses the SQLKorma DSL by default.
+
+<p>
+korma.db is required as kdb and korma.core is required as kc
+</p>
+1. [Korma](http://www.sqlkorma.com/)

@@ -4,7 +4,9 @@
         chp.css)
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            [korma.db :as kdb]
+            [korma.core :as kc]))
 
 (def root-path "chp-root/")
 
