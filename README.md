@@ -11,8 +11,8 @@ This page serves as project documentation.<br />
 2. [Install](https://github.com/JeremS/cljss-core)
 3. [How?](https://github.com/runexec/CHP/#how)
 4. [Example CHTML & Routes](https://github.com/runexec/CHP/#example-chtml--routes)
-5. [Clojure HTML Generation](https://github.com/runexec/CHP/#clojure-and-html)
-6. [Clojure and CSS Generation](https://github.com/runexec/CHP/#clojure-and-css)
+5. [Clojure HTML Generation](https://github.com/runexec/CHP/#clojure-and-html-generation)
+6. [Clojure and CSS Generation](https://github.com/runexec/CHP/#clojure-and-css-generation)
 7. [Clojure and JavaScript Generation](https://github.com/runexec/CHP/#clojure-and-javascript-generation)
 8. [Clojure and SQL](https://github.com/runexec/CHP/#clojure-and-sql)
 
