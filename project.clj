@@ -5,7 +5,11 @@
                  [compojure "1.1.5"]
                  [hiccup "1.0.3"]
                  [garden "0.1.0-beta2"]]
-  :plugins [[lein-ring "0.8.3"]]
+  :plugins [[lein-ring "0.8.3"]
+            [lein-cljsbuild "0.3.0"]]
   :ring {:handler chp.handler/app}
-  :profiles
-  {:dev {:dependencies [[ring-mock "0.1.3"]]}})
+  :cljsbuild {:builds [{:source-paths ["resources/cljs"]
+                        :compiler {:output-to "resources/public/js/main.js"
+                                   :optimizations :whitespace
+                                   :pretty-print true}}]}
+  :profiles {:dev {:dependencies [[ring-mock "0.1.3"]]}})

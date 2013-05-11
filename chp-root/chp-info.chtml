@@ -8,6 +8,11 @@
           (println title))
       </clojure>
     </title>
+    <script>
+      <clojure>
+	(println (slurp "resources/public/js/main.js"))
+      </clojure>
+    </script>
     <style>
       body { background: black;
       color: yellow;

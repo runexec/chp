@@ -13,6 +13,7 @@ This page serves as project documentation.<br />
 4. [Example CHTML & Routes](https://github.com/runexec/CHP/#example-chtml--routes)
 5. [Clojure HTML Generation](https://github.com/runexec/CHP/#clojure-and-html)
 6. [Clojure and CSS Generation](https://github.com/runexec/CHP/#clojure-and-css)
+7. [Clojure and JavaScript Generation](#)
 
 #### Getting started
 
@@ -72,7 +73,7 @@ The following link is the chtml page that is used in the example below.
 ```
 
 
-#### Clojure and HTML
+#### Clojure and HTML Generation
 
 The following methods presented in the documentation below are 
 accessible from within CHTML files by default. These abstractions
@@ -143,10 +144,19 @@ Please note that these forms DO NOT generate Hiccup code, but HTML.
 
 ```
 
-#### Clojure and CSS
+#### Clojure and CSS Generation
 
 ClojureHomePage uses the Garden CSS generation library by default.
 The Garden documentation page is located at https://github.com/noprompt/garden
 <br />
-CHP CSS wrapper is located in the namespace chp.css and doesn't need to be displayed
-with the println form.
+CHP CSS wrapper is located in the namespace chp.css.
+
+#### Clojure and JavaScript Generation
+
+ClojureHomePage uses ClojureScript and lein-cljsbuild to generate javascript.
+CHP uses the directory resources/cljs/ as the default cljs source code directory.
+<p>
+[lein-cljsbuild Documentation](https://github.com/emezeske/lein-cljsbuild/)
+</p>
+[ClojureScript Documentation](https://github.com/clojure/clojurescript)
+
