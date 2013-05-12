@@ -5,7 +5,8 @@
                  [compojure "1.1.5"]
                  [hiccup "1.0.3"]
                  [garden "0.1.0-beta2"]
-                 [korma "0.3.0-RC5"]]
+                 [korma "0.3.0-RC5"]
+                 [lib-noir "0.5.2"]]
   :plugins [[lein-ring "0.8.3"]
             [lein-cljsbuild "0.3.1"]]
   :ring {:handler chp.handler/app}

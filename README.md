@@ -15,6 +15,7 @@ This page serves as project documentation.<br />
 6. [Clojure and CSS Generation](#clojure-and-css-generation)
 7. [Clojure and JavaScript Generation](#clojure-and-javascript-generation)
 8. [Clojure and SQL](#clojure-and-sql)
+9. [Session handling, Cookies, and Compojure](#)
 
 #### Getting started
 
@@ -163,3 +164,13 @@ CHP uses the directory resources/cljs/ as the default cljs source code directory
 ClojureHomePage uses the SQLKorma DSL by default. korma.db is required as kdb and korma.core is required as kc
 
 1. [Korma Documentation](http://www.sqlkorma.com/)
+
+#### Session handling, Cookies, and Compojure
+
+Because CHP is Compojure based, you can use Compojure and Ring extensions. Already included, but not loaded by default, the lib-noir library is a great helper library for Clojure web development.
+
+
+1. [lib-noir API](http://yogthos.github.io/lib-noir/index.html)
+2. [lib-noir Github](https://github.com/noir-clojure/lib-noir)
+3. [Ring CSRF protection](https://github.com/weavejester/ring-anti-forgery)
+4. [Ring Middleware Extensions](https://github.com/search?q=ring+middleware&ref=cmdform&type=Repositories)
