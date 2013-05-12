@@ -15,7 +15,7 @@ This page serves as project documentation.<br />
 6. [Clojure and CSS Generation](#clojure-and-css-generation)
 7. [Clojure and JavaScript Generation](#clojure-and-javascript-generation)
 8. [Clojure and SQL](#clojure-and-sql)
-9. [Session handling, Cookies, and Compojure](#)
+9. [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
 
 #### Getting started
 
