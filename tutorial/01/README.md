@@ -68,12 +68,12 @@ Started server on port 3000
 <html>
   <head>
     <title>
-      <clojure>
+      <clj>
 	(println 
          (format "%s's ClojureHomePage!"
                  (escape
                   (System/getProperty "user.name")))
-      </clojure>
+      </clj>
     </title>
   </head>
   <body>
@@ -89,12 +89,12 @@ Started server on port 3000
 <html>
   <head>
     <title>
-      <clojure>
+      <clj>
       (println 
          (format "%s's ClojureHomePage!"
                  (escape
                   (System/getProperty "user.name"))))
-      </clojure>
+      </clj>
     </title>
   </head>
   <body>
@@ -103,7 +103,7 @@ Started server on port 3000
       <td><h1>System Property</h1></td>
       <td><h1>Property Value</h1></td>
       </tr>
-      <clojure>
+      <clj>
       (doseq [_ (System/getProperties)
                 :let [k (key _) 
                       v (System/getProperty k)]]
@@ -111,7 +111,7 @@ Started server on port 3000
            (format "<tr><td>%s</td><td>%s</td>"
                    (escape k)
                    (escape v))))
-      </clojure>
+      </clj>
     </table>
   </body>
 </html>
@@ -121,9 +121,10 @@ Started server on port 3000
 
 1. Now that you've created your own CHTML page, let's start to give it a better route by opening the file ```hello-world/chp/src/chp/handler.clj```
 2. You'll want to scroll to the very bottom of the file or until you see ```(defroutes app-routes ...)```
-3. Listed here are all the possible ways to make a CHP route, but we only need a simple one this example.
+3. Listed here are all the possible ways to make a CHP route.
 
 ```clojure
+
 (defroutes app-routes
   (chp-route "/chtml" 
              (binding [*title* "Test Page Example"]
@@ -138,9 +139,12 @@ Started server on port 3000
                           :-not-found "Sorry, but this page doesn't exist"})))
   (chp-route "/testing"
              (or (chp-when :get
-                           (str "chp-body wasn't used to access "
-                                ($ uri)))
+                           (format "chp-body wasn't used to access %s from %s with %s"
+                                ($ uri) ($ ip) ($ headers)))
                  "Not Found"))
+  (chp-route "/chp"
+             (or (chp-parse (str root-path "chp-info.chtml"))
+                 "error"))
   (route/resources "/")
   (route/not-found "Not Found"))
 ```

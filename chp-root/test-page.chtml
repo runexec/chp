@@ -1,22 +1,22 @@
-<clojure>(declare ^:dynamic *words*)</clojure>
+<clj>(declare ^:dynamic *words*)</clj>
 <html>
 <head>
-<title><clojure>(println *title*)</clojure></title>
+<title><clj>(println *title*)</clj></title>
 </head>
 <body>
 
 <p>
-Method: <clojure>(println ($ method))</clojure><br />
-Path: <clojure>(println ($ uri))</clojure><br />
-Params: <clojure>(println ($ params))</clojure><br />
+Method: <clj>(println ($ method))</clj><br />
+Path: <clj>(println ($ uri))</clj><br />
+Params: <clj>(println ($ params))</clj><br />
 </p>
 
 
-<clojure> 
+<clj> 
   (doseq [x [1 2 3]] (println  "CHP Line " x "<br />"))
-</clojure>
+</clj>
 
-<clojure> 
+<clj> 
 (dotimes [_ 3]
   (println
    (str (text-field
@@ -28,5 +28,5 @@ Params: <clojure>(println ($ params))</clojure><br />
    (str (check-box (escape _) true)
         "<br />")))
 (binding [*words* "some words"] (println *words* "<br />"))
-</clojure>
+</clj>
 </body>

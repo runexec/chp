@@ -1,55 +1,62 @@
-<html>
+<OBhtml>
   <head>
     <title>
-      <clojure>
+      <clj>
 	(let [title "ClojureHomePage - INFO - [Clojure %s]"
               title (escape
                      (format title (clojure-version)))]
           (println title))
-      </clojure>
+      </clj>
     </title>
     <script>
-      <clojure>
+      <clj>
        (println (slurp "resources/public/js/main.js"))
-      </clojure>
+      </clj>
     </script>
     <style>
-      <clojure>
+      <clj>
       (println
        (css [:body
              {:background "#ABC"}])
        (css [:b
              {:font-size "30px"
               :color "#EFF"}]))
-      </clojure>
+      </clj>
     </style>
   </head>
   <body>
     <div>
+      <b>Header info</b><br />
+      <clj>
+        (doseq [_ ($ headers)
+                :let [[k v] _]]
+          (println
+           (format "[%s] = %s<br />" k v)))
+      </clj>
       <b>Clojure Version</b><br />
-      <clojure>
+      <clj>
         (-> (clojure-version)
             escape
             (str "<br />")
             println)
-      </clojure><br />
+      </clj><br />
       <b>CHP Namespace</b><br />
-      <clojure>
+      <clj>
         (-> *ns*
             escape
             (str "<br />")
             println)
-      </clojure><br />
+      </clj><br />
       <b>CHP Absolute Root Path</b><br />
-      <clojure>
+      <clj>
         (-> root-path
             clojure.java.io/file
             .getAbsolutePath
             escape
             (println "<br /><br />"))
-      </clojure>
+      </clj>
       <b>Public Symbols</b><br />
-      <clojure>
+      <clj>
         (->> *ns*
              ns-publics
              keys
@@ -57,18 +64,18 @@
              (interpose "<br />")
              (apply str)
              println)
-      </clojure>
+      </clj>
       <br /><br />
       <b>Detected CHTMLs</b><br />
-      <clojure>
+      <clj>
         (doseq [_ (chtmls)
                 :let [chtml (escape _)]]
           (println
            (str chtml "<br />")))
-      </clojure>
+      </clj>
       <br /><br />
       <b>JVM</b><br />
-      <clojure>
+      <clj>
         (let [properties (filter #(.contains % "java") 
                                  (keys (System/getProperties)))]
           (doseq [_ properties]
@@ -76,6 +83,6 @@
              (format "[%s] = %s<br />"
                      _ (env  _))))
           (println "<br />"))
-      </clojure>
+      </clj>
   </body>
 </html>

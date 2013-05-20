@@ -1,12 +1,12 @@
 <html>
   <head>
     <title>
-      <clojure>
+      <clj>
 	(println 
          (format "%s's ClojureHomePage!"
                  (escape
                   (System/getProperty "user.name"))))
-      </clojure>
+      </clj>
     </title>
   </head>
   <body>
@@ -15,7 +15,7 @@
 	<td><h1>System Property</h1></td>
 	<td><h1>Property Value</h1></td>
       </tr>
-      <clojure>
+      <clj>
 	(doseq [_ (System/getProperties)
                 :let [k (key _) 
                       v (System/getProperty k)]]
@@ -23,7 +23,7 @@
            (format "<tr><td>%s</td><td>%s</td>"
                    (escape k)
                    (escape v))))
-      </clojure>
+      </clj>
     </table>
   </body>
 </html>

@@ -2,8 +2,10 @@
 ClojureHomePage is a Compojure based web framework that allows you to write the backend and frontend with Clojure.
 
 You can <br />
-* Embed Clojure into a HTML file with the ```<clojure></clojure>``` tags
+* Embed Clojure into a HTML file with the ```<clj></clj>``` tags
 * Enable multiple method handlers under a single route (get, post, put, delete, and head)
+* Easily retrieve common web headers (ex. ($ user-agent))
+* Easily retrieve web headers (ex. ($$ cache-control))
 
 This page serves as project documentation.<br />
 
@@ -33,7 +35,7 @@ lein ring server
 
 By default, the CHTML files are located in chp-root folder of the project folder.
 When a CHTML file is parsed, all public variables of the chp.handler namespace
-are accessible during the evaluation of the ```<clojure></clojure>``` tags. Use print
+are accessible during the evaluation of the ```<clj></clj>``` tags. Use print
  or println within the tags to have the results displayed.
 
 
@@ -48,7 +50,6 @@ The following link is the chtml page that is used in the example below.
 ```clojure
 (defroutes app-routes
   (chp-route "/chtml" 
-  	     ;; access dynamic variables in chp.handler namespace
              (binding [*title* "Test Page Example"]
                (or (chp-parse (str root-path "test-page.chtml"))
                    "error")))
@@ -61,8 +62,10 @@ The following link is the chtml page that is used in the example below.
                           :-not-found "Sorry, but this page doesn't exist"})))
   (chp-route "/testing"
              (or (chp-when :get
-                           (str "chp-body wasn't used to access "
-                                ($ uri)))
+                           (str (format "chp-body wasn't used to access %s from %s with %s"
+                                        ($ uri) ($ ip) ($ user-agent))
+                                (format "<p>Tracking you? DNT HTTP Header = %s</p>" ($$ dnt))
+                                (format "<p>HTTP Header cache-control = %s</p>" ($$ cache-control))))
                  "Not Found"))
   (chp-route "/chp"
              (or (chp-parse (str root-path "chp-info.chtml"))
@@ -70,8 +73,6 @@ The following link is the chtml page that is used in the example below.
   (route/resources "/")
   (route/not-found "Not Found"))
 
-(def app
-  (handler/site app-routes))
 ```
 
 
