@@ -1,7 +1,7 @@
 (ns chp.handler
   (:use compojure.core
         chp.html
-        chp.css)
+        [garden.core :only [css]])
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [clojure.string :as string]
@@ -21,6 +21,9 @@
 (defn global-params [] (:params *page*))
 (defn global-method [] (:method *page*))
 (defn global-uri [] (:uri *page*))
+(defn global-ip [] (:ip *page*))
+(defn global-headers [] (:headers *page*))
+(defn global-user-agent [] (:user-agent *page*))
 
 (defmacro $ 
   "To call (global-fn-name). ($ uri) is the  same as (global-uri)"
@@ -29,6 +32,11 @@
           (str "global-")
           symbol)))
 
+(defmacro $$
+  "Pull value straight from header"
+  [attribute-name]
+  `(get (global-headers) ~(str attribute-name)))
+
 (defn env 
   "Returns an environment variable value"
   [-key-str]
@@ -36,10 +44,15 @@
 
 (defmacro chp-route
   [path & body]
-  `(ANY ~(str path) {-params# :params
+  `(ANY ~(str path) {-headers# :headers
+                     -ip# :remote-addr
+                     -params# :params
                      -method# :request-method
                      -uri# :uri}
         (binding [*page* (assoc *page*
+                           :headers -headers#
+                           :user-agent (get -headers# "user-agent")
+                           :ip -ip#
                            :method -method#
                            :params -params#
                            :uri -uri#)]
@@ -71,13 +84,11 @@
   "Parses chtml files"
   [path]
   (let [_ (slurp path)
-        placements (distinct (re-seq
-                              #"(?is)<clojure>.*?</clojure>"
-                              _))
+        placements (distinct (re-seq #"(?is)<clj>.*?</clj>" _))
         get-clj #(-> (str %)
-                     (string/split #"<clojure>")
+                     (string/split #"<clj>")
                      last
-                     (string/split #"</clojure>")
+                     (string/split #"</clj>")
                      first)
         values (map #(do {:replace (str %)
                           :return (with-out-str
@@ -116,11 +127,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Routes
 
 (defroutes app-routes
-  (chp-route "/"
-             (or (chp-parse (str root-path "index.chtml"))
-                 "error"))
+  (chp-route "/" 
+               (or (chp-parse (str root-path "index.chtml"))
+                   "error")
   (route/resources "/")
-  (route/not-found "Not Found"))
+  (route/not-found "Not Found")))
 
 (def app
   (handler/site app-routes))

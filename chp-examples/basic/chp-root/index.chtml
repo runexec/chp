@@ -3,7 +3,7 @@
     <!-- ClojureScript -->
     <script src="/js/main.js"></script> 
     <style>
-      <clojure>
+      <clj>
         (println
          (css [:body
                {:background "#666"
@@ -15,14 +15,14 @@
                {:color "#FFF"}])
          (css [:a {:color "#FA0"
                    :font-size :40px}]))
-      </clojure>
+      </clj>
     </style>
   </head>
   <body>
     <h1>
-      <clojure>
+      <clj>
 	(println "ClojureHomePage Framework on Clojure " (clojure-version))
-      </clojure>
+      </clj>
     </h1>
     <a onclick="main.clojurescript()">Click me for ClojureScript action</a>
   </body>
