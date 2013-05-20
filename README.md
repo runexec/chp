@@ -6,6 +6,10 @@ You can <br />
 * Enable multiple method handlers under a single route (get, post, put, delete, and head)
 * Easily retrieve common web headers (ex. ($ user-agent))
 * Easily retrieve web headers (ex. ($$ cache-control))
+* HTML generation is handled by a drop-in replacement for common Hiccup forms
+* JavaScript / ECMAScript is handled by ClojureScript
+* CSS is handled by Garden
+* SQL is handled by KormaSQL
 
 This page serves as project documentation.<br />
 
