@@ -2,7 +2,8 @@
   (:use compojure.core
         chp.html
         [garden.core :only [css]])
-  (:require [compojure.handler :as handler]
+  (:require chp.server
+            [compojure.handler :as handler]
             [compojure.route :as route]
             [clojure.string :as string]
             [korma.db :as kdb]
@@ -24,6 +25,8 @@
 (defn global-ip [] (:ip *page*))
 (defn global-headers [] (:headers *page*))
 (defn global-user-agent [] (:user-agent *page*))
+(defn global-server-ip [] (chp.server/addr))
+(defn global-server-name [] (chp.server/host-name))
 
 (defmacro $ 
   "To call (global-fn-name). ($ uri) is the  same as (global-uri)"
@@ -123,7 +126,6 @@
 (defn chtmls [] (chp-dir root-path))    
 
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Routes
 
 (defroutes app-routes
@@ -132,9 +134,15 @@
                (or (chp-parse (str root-path "test-page.chtml"))
                    "error")))
   (chp-route "/"
-             (let [display (str "Method " ($ method) "<br />"
-                                "URI " ($ uri) "<br />"
-                                "Params " ($ params) "<br />")]
+             (let [display (str "Method " (escape ($ method)) "<br />"
+                                "URI " (escape ($ uri)) "<br />"
+                                "Params " (escape ($ params)) "<br />"
+                                "Headers <p>"
+                                (with-out-str
+                                  (doseq [[k v] (escape-map ($ headers))]
+                                    (println k "=" v "<br />")))
+                                (format "</p>name %s : ip %s"
+                                        ($ server-name) ($ server-ip)))]
                (chp-body {:-get (str "Get => " display)
                           :-post (str "Post => " display)
                           :-not-found "Sorry, but this page doesn't exist"})))

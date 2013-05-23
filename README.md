@@ -58,9 +58,15 @@ The following link is the chtml page that is used in the example below.
                (or (chp-parse (str root-path "test-page.chtml"))
                    "error")))
   (chp-route "/"
-             (let [display (str "Method " ($ method) "<br />"
-                                "URI " ($ uri) "<br />"
-                                "Params " ($ params) "<br />")]
+             (let [display (str "Method " (escape ($ method)) "<br />"
+                                "URI " (escape ($ uri)) "<br />"
+                                "Params " (escape ($ params)) "<br />"
+                                "Headers <p>"
+                                (with-out-str
+                                  (doseq [[k v] (escape-map ($ headers))]
+                                    (println k "=" v "<br />")))
+                                (format "</p>name %s : ip %s"
+                                        ($ server-name) ($ server-ip)))]
                (chp-body {:-get (str "Get => " display)
                           :-post (str "Post => " display)
                           :-not-found "Sorry, but this page doesn't exist"})))
@@ -76,7 +82,6 @@ The following link is the chtml page that is used in the example below.
                  "error"))
   (route/resources "/")
   (route/not-found "Not Found"))
-
 ```
 
 

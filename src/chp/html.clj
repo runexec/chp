@@ -10,6 +10,10 @@
 (defn escape [s]
   (hiccup.core/h s))
 
+(defn escape-map [map-coll]
+  (zipmap (map escape (keys map-coll))
+          (map escape (vals map-coll))))
+
 (defn url-encode [s]
   (hiccup.util/url-encode s))
 
