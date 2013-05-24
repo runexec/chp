@@ -134,15 +134,16 @@
                (or (chp-parse (str root-path "test-page.chtml"))
                    "error")))
   (chp-route "/"
-             (let [display (str "Method " (escape ($ method)) "<br />"
-                                "URI " (escape ($ uri)) "<br />"
-                                "Params " (escape ($ params)) "<br />"
-                                "Headers <p>"
-                                (with-out-str
-                                  (doseq [[k v] (escape-map ($ headers))]
-                                    (println k "=" v "<br />")))
-                                (format "</p>name %s : ip %s"
-                                        ($ server-name) ($ server-ip)))]
+             (let [display (str (format "Method %s <br />" (escape ($ method)))
+                                (format "URI %s <br />" (escape ($ uri)))
+                                (format "Params %s <br />" (escape ($ params)))
+                                (format "Header Values <p>%s</p>"
+                                        (with-out-str
+                                          (doseq [[k v] (escape-map ($ headers))]
+                                            (println k "=" v "<br />"))))
+                                (format "name %s : ip %s"
+                                        ($ server-name)
+                                        ($ server-ip)))]
                (chp-body {:-get (str "Get => " display)
                           :-post (str "Post => " display)
                           :-not-found "Sorry, but this page doesn't exist"})))
