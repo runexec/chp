@@ -13,10 +13,10 @@ You can <br />
 
 This page serves as project documentation.<br />
 
-1. [Tutorial](https://github.com/runexec/chp/tree/master/tutorial/01)
+1. [Example CHTML & Routes](#example-chtml--routes)
 2. [Install](#getting-started)
 3. [How?](#how)
-4. [Example CHTML & Routes](#example-chtml--routes)
+4. [Tutorial](https://github.com/runexec/chp/tree/master/tutorial/01)
 5. [Clojure HTML Generation](#clojure-and-html-generation)
 6. [Clojure and CSS Generation](#clojure-and-css-generation)
 7. [Clojure and JavaScript Generation](#clojure-and-javascript-generation)

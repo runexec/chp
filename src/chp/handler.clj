@@ -141,7 +141,7 @@
                                         (with-out-str
                                           (doseq [[k v] (escape-map ($ headers))]
                                             (println k "=" v "<br />"))))
-                                (format "name %s : ip %s"
+                                (format "Server Name %s <br /> Server IP %s"
                                         ($ server-name)
                                         ($ server-ip)))]
                (chp-body {:-get (str "Get => " display)
