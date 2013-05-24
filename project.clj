@@ -9,7 +9,11 @@
                  [lib-noir "0.5.2"]]
   :plugins [[lein-ring "0.8.3"]
             [lein-cljsbuild "0.3.1"]]
-  :ring {:handler chp.handler/app}
+  :ring {:port 8000
+         :auto-reload? true
+         :auto-refresh? true
+         :reload-paths ["src/chp/"]
+         :handler chp.handler/app}
   :cljsbuild {:builds [{:source-paths ["resources/cljs"]
                         :compiler {:output-to "resources/public/js/main.js"
                                    :optimizations :whitespace

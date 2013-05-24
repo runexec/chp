@@ -2,14 +2,15 @@
 ClojureHomePage is a Compojure based web framework that allows you to write the backend and frontend with Clojure.
 
 You can <br />
-* Embed Clojure into a HTML file with the ```<clj></clj>``` tags
-* Enable multiple method handlers under a single route (get, post, put, delete, and head)
-* Easily retrieve common web headers (ex. ($ user-agent))
-* Easily retrieve web headers (ex. ($$ cache-control))
-* HTML generation is handled by a drop-in replacement for common Hiccup forms
-* JavaScript / ECMAScript is handled by ClojureScript
-* CSS is handled by Garden
-* SQL is handled by KormaSQL
+* Run Clojure inside an HTML file with the ```<clj></clj>``` tags
+* Have multiple method handlers under a single route (get, post, put, delete, and head)
+* Easily get common web headers (ex. ($ user-agent))
+* Easily get web headers (ex. ($$ cache-control))
+* Easily get environmental variables (ex. (env java.vm.name))
+* Generate HTML with a drop-in replacement for common Hiccup forms
+* Generate JavaScript / ECMAScript with ClojureScript
+* Generate CSS with Garden
+* Manipulate databases with KormaSQL
 
 This page serves as project documentation.<br />
 
@@ -22,6 +23,7 @@ This page serves as project documentation.<br />
 7. [Clojure and JavaScript Generation](#clojure-and-javascript-generation)
 8. [Clojure and SQL](#clojure-and-sql)
 9. [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
+10. [Ring and port configuration](#Ring)
 
 #### Getting started
 
@@ -185,3 +187,18 @@ Because CHP is Compojure based, you can use Compojure and Ring extensions. Alrea
 2. [lib-noir Github](https://github.com/noir-clojure/lib-noir)
 3. [Ring CSRF protection](https://github.com/weavejester/ring-anti-forgery)
 4. [Ring Middleware Extensions](https://github.com/search?q=ring+middleware&ref=cmdform&type=Repositories)
+
+#### Ring configuration
+
+The default configuration for CHP is located in project.clj
+
+```clojure
+:ring {:port 8000
+       :auto-reload? true
+       :auto-refresh? true
+       :reload-paths ["src/chp/"]
+       :handler chp.handler/app}
+```
+
+1. [Lein-ring documentation](https://github.com/weavejester/lein-ring)
+
