@@ -23,7 +23,7 @@ This page serves as project documentation.<br />
 7. [Clojure and JavaScript Generation](#clojure-and-javascript-generation)
 8. [Clojure and SQL](#clojure-and-sql)
 9. [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
-10. [Ring and port configuration](#Ring)
+10. [Ring and port configuration](#ring-configuration)
 
 #### Getting started
 
