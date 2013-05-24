@@ -40,10 +40,10 @@
   [attribute-name]
   `(get (global-headers) ~(str attribute-name)))
 
-(defn env 
+(defmacro env 
   "Returns an environment variable value"
-  [-key-str]
-  (System/getProperty -key-str))
+  [key]
+  `(System/getProperty (name '~key)))
 
 (defmacro chp-route
   [path & body]
