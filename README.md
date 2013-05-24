@@ -2,7 +2,7 @@
 ClojureHomePage is a Compojure based web framework that allows you to write the backend and frontend with Clojure.
 
 You can <br />
-* Run Clojure inside an HTML file with the ```<clj></clj>``` tags
+* Run Clojure inside a HTML file with the ```<clj></clj>``` tags
 * Have multiple method handlers under a single route (get, post, put, delete, and head)
 * Easily get common web headers (ex. ($ user-agent))
 * Easily get web headers (ex. ($$ cache-control))
