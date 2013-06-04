@@ -4,9 +4,11 @@ ClojureHomePage is a Compojure based web framework that allows you to write the 
 You can <br />
 * Run Clojure inside a HTML file with the ```<clj></clj>``` tags
 * Have multiple method handlers under a single route (get, post, put, delete, and head)
-* Easily get common web headers (ex. ($ user-agent))
-* Easily get web headers (ex. ($$ cache-control))
-* Easily get environmental variables (ex. (env java.vm.name))
+* Easily get common web headers ex. ($ user-agent)
+* Easily get web headers ex. ($$ cache-control)
+* Easily get request params ex. ($p userid)
+* Easily get environmental variables ex. (env java.vm.name)
+* Routes can be defined in seperate files and namespaces
 * Generate HTML with a drop-in replacement for common Hiccup forms
 * Generate JavaScript / ECMAScript with ClojureScript
 * Generate CSS with Garden
@@ -54,11 +56,20 @@ The following link is the chtml page that is used in the example below.
 
 
 ```clojure
-(defroutes app-routes
+(defchp app-routes
+
+  ;; Load CHP File
+
   (chp-route "/chtml" 
              (binding [*title* "Test Page Example"]
                (or (chp-parse (str root-path "test-page.chtml"))
                    "error")))
+  (chp-route "/chp"
+             (or (chp-parse (str root-path "chp-info.chtml"))
+                 "error"))
+
+  ;; Multiple handlers under a single route
+
   (chp-route "/"
              (let [display (str (format "Method %s <br />" (escape ($ method)))
                                 (format "URI %s <br />" (escape ($ uri)))
@@ -67,24 +78,42 @@ The following link is the chtml page that is used in the example below.
                                         (with-out-str
                                           (doseq [[k v] (escape-map ($ headers))]
                                             (println k "=" v "<br />"))))
-                                (format "name %s : ip %s"
+                                (format "Server Name %s <br /> Server IP %s"
                                         ($ server-name)
                                         ($ server-ip)))]
                (chp-body {:-get (str "Get => " display)
                           :-post (str "Post => " display)
                           :-not-found "Sorry, but this page doesn't exist"})))
+
+  ;; Multiple handlers under a single route
+
   (chp-route "/testing"
-             (or (chp-when :get
-                           (str (format "chp-body wasn't used to access %s from %s with %s"
-                                        ($ uri) ($ ip) ($ user-agent))
-                                (format "<p>Tracking you? DNT HTTP Header = %s</p>" ($$ dnt))
-                                (format "<p>HTTP Header cache-control = %s</p>" ($$ cache-control))))
+             (or 
+              (chp-when :post "POST METHOD RETURN")
+              (chp-when :get
+                        (str (format "chp-body wasn't used to access %s from %s with %s"
+                                     ($ uri) ($ ip) ($ user-agent))
+                             (format "<p>Tracking you? DNT HTTP Header = %s</p>" ($$ dnt))
+                             (format "<p>HTTP Header cache-control = %s</p>" ($$ cache-control))))
                  "Not Found"))
-  (chp-route "/chp"
-             (or (chp-parse (str root-path "chp-info.chtml"))
-                 "error"))
+
+  ;; Named params
+
+  (chp-route "/index/:id"
+             (format "ID is %s" 
+                     (escape ($p id))))
+  (chp-route "/index/:id/:action"
+             (format "Action is %s" 
+                     (escape ($p action))))
+
   (route/resources "/")
   (route/not-found "Not Found"))
+
+
+
+(def app
+  (chp-site example-routes
+            app-routes))
 ```
 
 

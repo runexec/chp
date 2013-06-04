@@ -4,20 +4,31 @@
         chp.html
         [garden.core :only [css]])
   (:require chp.server
-            [compojure.handler :as handler]
             [compojure.route :as route]
             [korma.db :as kdb]
-            [korma.core :as kc]))
+            [korma.core :as kc]
 
+            ;;;;;;;;;;;;;;;;;;; Routes
 
+            [chp.routes.example
+             :refer [example-routes]]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Routes
 
-(defroutes app-routes
+(defchp app-routes
+
+  ;; Load CHP File
+
   (chp-route "/chtml" 
              (binding [*title* "Test Page Example"]
                (or (chp-parse (str root-path "test-page.chtml"))
                    "error")))
+  (chp-route "/chp"
+             (or (chp-parse (str root-path "chp-info.chtml"))
+                 "error"))
+
+  ;; Multiple handlers under a single route
+
   (chp-route "/"
              (let [display (str (format "Method %s <br />" (escape ($ method)))
                                 (format "URI %s <br />" (escape ($ uri)))
@@ -32,19 +43,34 @@
                (chp-body {:-get (str "Get => " display)
                           :-post (str "Post => " display)
                           :-not-found "Sorry, but this page doesn't exist"})))
+
+  ;; Multiple handlers under a single route
+
   (chp-route "/testing"
-             (or (chp-when :get
-                           (str (format "chp-body wasn't used to access %s from %s with %s"
-                                        ($ uri) ($ ip) ($ user-agent))
-                                (format "<p>Tracking you? DNT HTTP Header = %s</p>" ($$ dnt))
-                                (format "<p>HTTP Header cache-control = %s</p>" ($$ cache-control))))
+             (or 
+              (chp-when :post "POST METHOD RETURN")
+              (chp-when :get
+                        (str (format "chp-body wasn't used to access %s from %s with %s"
+                                     ($ uri) ($ ip) ($ user-agent))
+                             (format "<p>Tracking you? DNT HTTP Header = %s</p>" ($$ dnt))
+                             (format "<p>HTTP Header cache-control = %s</p>" ($$ cache-control))))
                  "Not Found"))
-  (chp-route "/chp"
-             (or (chp-parse (str root-path "chp-info.chtml"))
-                 "error"))
+
+  ;; Named params
+
+  (chp-route "/index/:id"
+             (format "ID is %s" 
+                     (escape ($p id))))
+  (chp-route "/index/:id/:action"
+             (format "Action is %s" 
+                     (escape ($p action))))
+
   (route/resources "/")
   (route/not-found "Not Found"))
 
+
+
 (def app
-  (handler/site app-routes))
+  (chp-site example-routes
+            app-routes))
   

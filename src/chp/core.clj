@@ -1,6 +1,7 @@
 (ns chp.core
   (:use compojure.core)
   (:require chp.server
+            [compojure.handler :as handler]
             [clojure.string
              :as string]))
 
@@ -35,6 +36,10 @@
   [attribute-name]
   `(get (global-headers) ~(str attribute-name)))
 
+(defmacro $p
+  [param-name]
+  `(get (global-params) ~(keyword param-name)))
+
 (defmacro env 
   "Returns an environment variable value"
   [key]
@@ -42,11 +47,11 @@
 
 (defmacro chp-route
   [path & body]
-  `(ANY ~(str path) {-headers# :headers
-                     -ip# :remote-addr
-                     -params# :params
-                     -method# :request-method
-                     -uri# :uri}
+  `(ANY ~path {-headers# :headers
+               -ip# :remote-addr
+               -params# :params
+               -method# :request-method
+               -uri# :uri}
         (binding [*page* (assoc *page*
                            :headers -headers#
                            :user-agent (get -headers# "user-agent")
@@ -54,7 +59,7 @@
                            :method -method#
                            :params -params#
                            :uri -uri#)]
-            ~@body)))
+          ~@body)))
 
 (defmacro chp-when
   "kw-method = (:get|:head|:put|:post|:delete)"
@@ -120,3 +125,15 @@
 
 (defn chtmls [] (chp-dir root-path))    
 
+(defn chp-routes [& -routes] -routes)
+
+(defmacro defchp [-symbol & chp-routes]
+  `(def ~-symbol (chp-routes ~@chp-routes)))
+
+(defn chp-routing [& -chp-routes]
+  (apply routes
+         (reduce into [] -chp-routes)))
+
+(defn chp-site [& defchp-routes]
+  (handler/site
+   (apply chp-routing defchp-routes)))
