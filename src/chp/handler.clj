@@ -2,6 +2,7 @@
   (:use compojure.core
         chp.core
         chp.html
+        chp.template
         [garden.core :only [css]])
   (:require chp.server
             [compojure.route :as route]
@@ -65,6 +66,14 @@
   (chp-route "/index/:id/:action"
              (format "Action is %s" 
                      (escape ($p action))))
+
+  ;; Bind to templates
+
+  (chp-route "/template"
+             (using-template "example.chtml"
+                              {:body "chp-info.chtml"
+                               :test-tag "test-page.chtml"}))
+                              
 
   (route/resources "/")
   (route/not-found "Not Found"))

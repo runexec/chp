@@ -6,8 +6,10 @@
              :as string]))
 
 (def root-path "chp-root/")
+(def template-path (str root-path "templates/"))
 
 (defn chp-path [fp] (str root-path fp))
+(defn chp-template-path [fp] (str template-path fp))
 
 (def ^:dynamic *title* "CHP Page")
 (def ^:dynamic *page*
@@ -113,10 +115,9 @@
            (rest values)))))))
 
 (defn root-parse
-  "appends the root-path var to the provided path and
+  "prepends the root-path var to the provided path and
    call chp-parse on the modified path"
-  [path]
-  (chp-parse (str root-path path)))
+  [path] (-> path chp-path chp-parse))
 
 (defn chp-dir [path]
   (let [chtmls (filter #(not= nil %)
