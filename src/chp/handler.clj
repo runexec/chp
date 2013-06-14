@@ -24,7 +24,8 @@
                (or (chp-parse (str root-path "test-page.chtml"))
                    "error")))
   (chp-route "/chp"
-             (or (chp-parse (str root-path "chp-info.chtml"))
+             ;; root-parse = (chp-parse (str root-path path))
+             (or (root-parse "chp-info.chtml")
                  "error"))
 
   ;; Multiple handlers under a single route

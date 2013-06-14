@@ -112,6 +112,12 @@
                (replace r value))
            (rest values)))))))
 
+(defn root-parse
+  "appends the root-path var to the provided path and
+   call chp-parse on the modified path"
+  [path]
+  (chp-parse (str root-path path)))
+
 (defn chp-dir [path]
   (let [chtmls (filter #(not= nil %)
                        (map #(when (.. % 
