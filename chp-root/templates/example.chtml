@@ -1,5 +1,5 @@
 <html>
-  <head><title>Example Title</title></head>
+  <head><title>Example Title <clj>(println (java.util.Date.))</clj></title></head>
 <body>{{test-tag}} Example body {{body}}</boody>
 </html>
   

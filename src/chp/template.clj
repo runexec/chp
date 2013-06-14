@@ -13,7 +13,7 @@
         vs (mapv #(-> % chp-path chp-parse) (vals -map))
         html-map (zipmap ks vs)
         replacement #(format "{{%s}}" (name %))
-        template (slurp template-path)]
+        template (chp-parse template-path)]
     (loop [-keys ks
            body template]
       (let [k (last -keys)]
