@@ -6,7 +6,7 @@
    the key must represent a place holder in the template.
 
    ex. {:body \"/path/file.chtml\"} will replace {{body}}
-   found inside of file.chtml"
+   with the chp-parse contents of file.chtml"
   [template-path -map]
   {:pre (every? keyword? (keys -map))}
   (let [ks (into [] (keys -map))
