@@ -4,11 +4,12 @@ ClojureHomePage is a Compojure based web framework that allows you to write the 
 You can <br />
 * Run Clojure inside a HTML file with the ```<clj></clj>``` tags
 * Have multiple method handlers under a single route (get, post, put, delete, and head)
-* Easily get common web headers ex. ($ user-agent)
-* Easily get web headers ex. ($$ cache-control)
-* Easily get request params ex. ($p userid)
-* Easily get environmental variables ex. (env java.vm.name)
+* Get common web headers ex. ($ user-agent)
+* Get web headers ex. ($$ cache-control)
+* Get request params ex. ($p userid)
+* Get environmental variables ex. (env java.vm.name)
 * Routes can be defined in seperate files and namespaces
+* Style templates can be written in CHTML (ex. chp.template/using-template)
 * Generate HTML with a drop-in replacement for common Hiccup forms
 * Generate JavaScript / ECMAScript with ClojureScript
 * Generate CSS with Garden
@@ -68,6 +69,13 @@ The following link is the chtml page that is used in the example below.
              (or (chp-parse (str root-path "chp-info.chtml"))
                  "error"))
 
+  ;; Bind to templates
+
+  (chp-route "/template"
+             (using-template "example.chtml"
+                             {:body "chp-info.chtml"
+                              :test-tag "test-page.chtml"}))
+
   ;; Multiple handlers under a single route
 
   (chp-route "/"
@@ -105,6 +113,7 @@ The following link is the chtml page that is used in the example below.
   (chp-route "/index/:id/:action"
              (format "Action is %s" 
                      (escape ($p action))))
+
 
   (route/resources "/")
   (route/not-found "Not Found"))
