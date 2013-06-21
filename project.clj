@@ -16,6 +16,7 @@
          :auto-refresh? true
          :reload-paths ["src/chp/"]
          :handler chp.handler/app}
+  :aliases {"schema" ["run" "-m" "chp.schema/load-schemas"]}
   :cljsbuild {:builds [{:source-paths ["resources/cljs"]
                         :compiler {:output-to "resources/public/js/main.js"
                                    :optimizations :whitespace
