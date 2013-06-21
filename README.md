@@ -18,8 +18,8 @@ You can <br />
 
 This page serves as project documentation.<br />
 
-1. [Example CHTML & Routes](#example-chtml--routes)
-2. [Install](#getting-started)
+1. [Install](#getting-started)
+2. [Example CHTML & Routes](#example-chtml--routes)
 3. [SQL DB configuration and creation](#db-configuration-and-creation)
 4. [SQL Manipulation](#clojure-and-sql)
 5. [HTML Generation](#clojure-and-html-generation)
