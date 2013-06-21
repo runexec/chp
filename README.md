@@ -13,6 +13,7 @@ You can <br />
 * Generate HTML with a drop-in replacement for common Hiccup forms
 * Generate JavaScript / ECMAScript with ClojureScript
 * Generate CSS with Garden
+* Create database Schemas with Lobos ex. lein schema
 * Manipulate databases with KormaSQL
 
 This page serves as project documentation.<br />
@@ -21,12 +22,13 @@ This page serves as project documentation.<br />
 2. [Install](#getting-started)
 3. [How?](#how)
 4. [Tutorial](https://github.com/runexec/chp/tree/master/tutorial/01)
-5. [Clojure HTML Generation](#clojure-and-html-generation)
-6. [Clojure and CSS Generation](#clojure-and-css-generation)
-7. [Clojure and JavaScript Generation](#clojure-and-javascript-generation)
-8. [Clojure and SQL](#clojure-and-sql)
-9. [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
-10. [Ring and port configuration](#ring-configuration)
+5. [HTML Generation](#clojure-and-html-generation)
+6. [CSS Generation](#clojure-and-css-generation)
+7. [JavaScript Generation](#clojure-and-javascript-generation)
+8. [SQL DB configuration and creation](#db-configuration-and-creation)
+9. [SQL Manipulation](#clojure-and-sql)
+10. [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
+11. [Ring and port configuration](#ring-configuration)
 
 #### Getting started
 
@@ -209,6 +211,35 @@ CHP uses the directory resources/cljs/ as the default cljs source code directory
 
 1. [lein-cljsbuild Documentation](https://github.com/emezeske/lein-cljsbuild/)
 2. [ClojureScript Documentation](https://github.com/clojure/clojurescript)
+
+#### DB Configuration and Creation
+
+A Korma SQL and Lobos compatible SQL connection configuration file is located at resources/config/db.clj
+
+The SQL database tables are located in resources/schema/. Each file represents a single table and these files get evaluated by the lein alias ```lein schema```.
+
+```clojure
+$ lein schema
+Creating Table =>  resources/schema/example.clj
+OKAY
+Creating Table =>  resources/schema/user.clj
+OKAY
+```
+
+The Lobos library handles the table syntax. Below is the user table from user.clj.
+
+```clojure
+(table :user
+       (integer :id :primary-key :auto-inc)
+       (varchar :name 20)
+       (varchar :password 100)
+       (unique [:name]))
+```
+
+*Do not wrap your tables with the create macro.*
+
+1. [Lobos Project & Documentation](https://github.com/budu/lobos)
+2. [More Lobos Documentation](http://budu.github.io/lobos/documentation.html)
 
 #### Clojure and SQL 
 
