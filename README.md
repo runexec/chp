@@ -20,15 +20,18 @@ This page serves as project documentation.<br />
 
 1. [Example CHTML & Routes](#example-chtml--routes)
 2. [Install](#getting-started)
-3. [How?](#how)
-4. [Tutorial](https://github.com/runexec/chp/tree/master/tutorial/01)
+3. [SQL DB configuration and creation](#db-configuration-and-creation)
+4. [SQL Manipulation](#clojure-and-sql)
 5. [HTML Generation](#clojure-and-html-generation)
 6. [CSS Generation](#clojure-and-css-generation)
 7. [JavaScript Generation](#clojure-and-javascript-generation)
-8. [SQL DB configuration and creation](#db-configuration-and-creation)
-9. [SQL Manipulation](#clojure-and-sql)
-10. [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
-11. [Ring and port configuration](#ring-configuration)
+8. [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
+9. [Ring and port configuration](#ring-configuration)
+
+Other Documentation 
+
+1. [How?](#how)
+2. [Tutorial](https://github.com/runexec/chp/tree/master/tutorial/01)
 
 #### Getting started
 
