@@ -1,20 +1,37 @@
 #### CHP [![endorse](https://api.coderwall.com/runexec/endorsecount.png)](https://coderwall.com/runexec)
 ClojureHomePage is a Compojure based web framework that allows you to write the backend and frontend with Clojure.
 
-You can <br />
+
+This library provides the following
+
+<b> Clojure on the front end </b>
+
 * Run Clojure inside a HTML file with the ```<clj></clj>``` tags
-* Have multiple method handlers under a single route (get, post, put, delete, and head)
-* Get common web headers ex. ($ user-agent)
-* Get web headers ex. ($$ cache-control)
-* Get request params ex. ($p userid)
-* Get environmental variables ex. (env java.vm.name)
-* Routes can be defined in seperate files and namespaces
 * Style templates can be written in CHTML (ex. chp.template/using-template)
-* Generate HTML with a drop-in replacement for common Hiccup forms
-* Generate JavaScript / ECMAScript with ClojureScript
-* Generate CSS with Garden
-* Create database Schemas with Lobos ex. lein schema
-* Manipulate databases with KormaSQL
+
+<b> Parameters  </b>
+
+* Request params ex. ($p userid)
+* Common web headers ex. ($ user-agent)
+* Web Headers ex. ($$ cache-control)
+* Environmental variables ex. (env java.vm.name)
+
+<b> Path Routing </b>
+
+* Have multiple method handlers under a single route (get, post, put, delete, and head)
+* Routes can be defined in seperate files and namespaces
+
+<b> DB </b>
+
+* Create database schemas ex. lein schema
+* Manipulate databases
+
+<b> Code Generation </b>
+
+* Generate JavaScript / ECMAScript
+* Generate HTML
+* Generate CSS
+
 
 This page serves as project documentation.<br />
 
