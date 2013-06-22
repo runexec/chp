@@ -35,15 +35,16 @@ This library provides the following
 
 This page serves as project documentation.<br />
 
-1. [Install](#getting-started)
-2. [CHTML & Routes](#example-chtml--routes)
-3. [SQL DB configuration and creation](#db-configuration-and-creation)
-4. [SQL Manipulation](#clojure-and-sql)
-5. [HTML Generation](#clojure-and-html-generation)
-6. [CSS Generation](#clojure-and-css-generation)
-7. [JavaScript Generation](#clojure-and-javascript-generation)
-8. [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
-9. [Ring and port configuration](#ring-configuration)
+* [Install](#getting-started)
+* [CHTML & Routes](#example-chtml--routes)
+* [SQL DB configuration and creation](#db-configuration-and-creation)
+* [SQL DB Migrations](#db-migrations)
+* [SQL Manipulation](#clojure-and-sql)
+* [HTML Generation](#clojure-and-html-generation)
+* [CSS Generation](#clojure-and-css-generation)
+* [JavaScript Generation](#clojure-and-javascript-generation)
+* [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
+& [Ring and port configuration](#ring-configuration)
 
 Other Documentation 
 
@@ -267,6 +268,94 @@ The Lobos library handles the table syntax. Below is the user table from user.cl
 
 1. [Lobos Project & Documentation](https://github.com/budu/lobos)
 2. [More Lobos Documentation](http://budu.github.io/lobos/documentation.html)
+
+#### DB Migrations
+
+<b> Perform migration </b>
+
+```clojure
+$ lein migrate
+add-topic-table
+add-topic-subject-table
+add-tag-table
+```
+
+<b> Lobos migration files </b>
+
+```bash
+$ cat resources/migrations/01-add-topic-tables.clj
+```
+```clojure
+(defmigration add-topic-table
+  (up [] (create
+          (tbl :topic
+                 (varchar :title 50 :unique)
+                 (text :content))))
+  (down [] (drop (table :topic))))
+
+(defmigration add-topic-subject-table
+  (up [] (create
+          (tbl :topicSubject
+                 (varchar :title 50 :unique)
+                 (integer :id :auto-inc :primary-key))))
+  (down [] (drop (table :topicSubject))))
+```
+```bash 
+$ cat resources/migrations/02-add-tag-table.clj
+```
+```clojure
+(defmigration add-tag-table
+  (up [] (create
+          (tbl :tag
+               (varchar :title 25)
+               (integer :id :auto-inc :primary-key))))
+  (down [] (drop (table :tag))))
+```
+
+<b> Tables after migration </b>
+
+```bash
+example=# \dt
+             List of relations
+ Schema |       Name       | Type  | Owner 
+--------+------------------+-------+-------
+ public | example          | table | on
+ public | lobos_migrations | table | on
+ public | tag              | table | on
+ public | topic            | table | on
+ public | topicSubject     | table | on
+ public | user             | table | on
+(6 rows)
+```
+
+<b> Rollbacks </b>
+
+```bash
+$ lein rollback
+add-tag-table
+$ lein rollback
+add-topic-subject-table
+```
+
+<b> Tables after rollback </b>
+
+```bash
+example-# \dt
+             List of relations
+ Schema |       Name       | Type  | Owner 
+--------+------------------+-------+-------
+ public | example          | table | on
+ public | lobos_migrations | table | on
+ public | topic            | table | on
+ public | user             | table | on
+(4 rows)
+
+example-# 
+```
+
+1. [Lobos Project & Documentation](https://github.com/budu/lobos)
+2. [More Lobos Documentation](http://budu.github.io/lobos/documentation.html)
+
 
 #### Clojure and SQL 
 
