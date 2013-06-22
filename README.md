@@ -24,7 +24,9 @@ This library provides the following
 <b> DB </b>
 
 * Create SQL database schemas ex. lein schema
-* Manipulate SQL databases
+* Perform SQL database migrations ex. lein migrate
+* Perform migration rollbacks ex. lein rollback
+* Manipulate SQL databases with KormaSQL
 
 <b> Code Generation </b>
 
