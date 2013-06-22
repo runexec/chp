@@ -7,7 +7,7 @@ This library provides the following
 <b> Clojure on the front end </b>
 
 * Run Clojure inside a HTML file with the ```<clj></clj>``` tags
-* Style templates can be written in CHTML (ex. chp.template/using-template)
+* Style templates can be written in CHTML ex. chp.template/using-template
 
 <b> Parameters  </b>
 
@@ -23,8 +23,8 @@ This library provides the following
 
 <b> DB </b>
 
-* Create database schemas ex. lein schema
-* Manipulate databases
+* Create SQL database schemas ex. lein schema
+* Manipulate SQL databases
 
 <b> Code Generation </b>
 
@@ -36,7 +36,7 @@ This library provides the following
 This page serves as project documentation.<br />
 
 1. [Install](#getting-started)
-2. [Example CHTML & Routes](#example-chtml--routes)
+2. [CHTML & Routes](#example-chtml--routes)
 3. [SQL DB configuration and creation](#db-configuration-and-creation)
 4. [SQL Manipulation](#clojure-and-sql)
 5. [HTML Generation](#clojure-and-html-generation)
@@ -72,10 +72,17 @@ are accessible during the evaluation of the ```<clj></clj>``` tags. Use print
 
 #### Example CHTML & Routes
 
+Routes can be stored in two places
+
+1. File: src/chp/handler.clj
+2. Folder: src/chp/routes/
+
 The following link is the chtml page that is used in the example below. 
 <a href="https://github.com/runexec/chp/blob/master/chp-root/test-page.chtml">
    test-page.chtml
 </a>
+
+<b> Routes Example </b>
 
 
 ```clojure
