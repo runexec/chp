@@ -8,7 +8,7 @@
                  [korma "0.3.0-RC5"]
                  [lib-noir "0.5.2"]
                  [lobos "1.0.0-beta1"]
-                 [postgresql/postgresql "8.4-702.jdbc4"]]
+                 [org.postgresql/postgresql "9.2-1003-jdbc4"]]
   :plugins [[lein-ring "0.8.3"]
             [lein-cljsbuild "0.3.1"]]
   :ring {:port 8000
