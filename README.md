@@ -1,7 +1,7 @@
 #### CHP [![endorse](https://api.coderwall.com/runexec/endorsecount.png)](https://coderwall.com/runexec)
 ClojureHomePage is a Clojure Web Framework
 
-This library provides the following
+This framework provides the following
 
 <b> Clojure on the front end </b>
 
