@@ -22,12 +22,33 @@
 
   (chp-route "/chtml" 
              (binding [*title* "Test Page Example"]
-               (or (chp-parse (str root-path "test-page.chtml"))
+               (or (root-parse "test-page.chtml")
                    "error")))
   (chp-route "/chp"
-             ;; root-parse = (chp-parse (str root-path path))
+	     ;; root-parse = root-path "/" file
              (or (root-parse "chp-info.chtml")
                  "error"))
+
+  ;; Named params
+
+  (chp-route "/index/:id"
+             (format "ID is %s" 
+                     (escape ($p id))))
+  (chp-route "/index/:id/:action"
+             (format "Action is %s" 
+                     (escape ($p action))))
+
+  ;; Multiple handlers under a single route
+
+  (chp-route "/testing"
+             (or 
+              (chp-when :post "POST METHOD RETURN")
+              (chp-when :get
+                        (str (format "chp-body wasn't used to access %s from %s with %s"
+                                     ($ uri) ($ ip) ($ user-agent))
+                             (format "<p>Tracking you? DNT HTTP Header = %s</p>" ($$ dnt))
+                             (format "<p>HTTP Header cache-control = %s</p>" ($$ cache-control))))
+              "Not Found"))
 
   ;; Multiple handlers under a single route
 
@@ -46,39 +67,15 @@
                           :-post (str "Post => " display)
                           :-not-found "Sorry, but this page doesn't exist"})))
 
-  ;; Multiple handlers under a single route
-
-  (chp-route "/testing"
-             (or 
-              (chp-when :post "POST METHOD RETURN")
-              (chp-when :get
-                        (str (format "chp-body wasn't used to access %s from %s with %s"
-                                     ($ uri) ($ ip) ($ user-agent))
-                             (format "<p>Tracking you? DNT HTTP Header = %s</p>" ($$ dnt))
-                             (format "<p>HTTP Header cache-control = %s</p>" ($$ cache-control))))
-                 "Not Found"))
-
-  ;; Named params
-
-  (chp-route "/index/:id"
-             (format "ID is %s" 
-                     (escape ($p id))))
-  (chp-route "/index/:id/:action"
-             (format "Action is %s" 
-                     (escape ($p action))))
-
   ;; Bind to templates
 
   (chp-route "/template"
              (using-template "example.chtml"
-                              {:body "chp-info.chtml"
-                               :test-tag "test-page.chtml"}))
-                              
+                             {:body "chp-info.chtml"
+                              :test-tag "test-page.chtml"}))
 
   (route/resources "/")
   (route/not-found "Not Found"))
-
-
 
 (def app
   (chp-site example-routes

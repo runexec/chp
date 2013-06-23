@@ -1,6 +1,5 @@
 #### CHP [![endorse](https://api.coderwall.com/runexec/endorsecount.png)](https://coderwall.com/runexec)
-ClojureHomePage is a Compojure based web framework that allows you to write the backend and frontend with Clojure.
-
+ClojureHomePage is a Clojure Web Framework
 
 This library provides the following
 
@@ -95,18 +94,33 @@ The following link is the chtml page that is used in the example below.
 
   (chp-route "/chtml" 
              (binding [*title* "Test Page Example"]
-               (or (chp-parse (str root-path "test-page.chtml"))
+               (or (root-parse "test-page.chtml")
                    "error")))
   (chp-route "/chp"
-             (or (chp-parse (str root-path "chp-info.chtml"))
+	     ;; root-parse = root-path "/" file
+             (or (root-parse "chp-info.chtml")
                  "error"))
 
-  ;; Bind to templates
+  ;; Named params
 
-  (chp-route "/template"
-             (using-template "example.chtml"
-                             {:body "chp-info.chtml"
-                              :test-tag "test-page.chtml"}))
+  (chp-route "/index/:id"
+             (format "ID is %s" 
+                     (escape ($p id))))
+  (chp-route "/index/:id/:action"
+             (format "Action is %s" 
+                     (escape ($p action))))
+
+  ;; Multiple handlers under a single route
+
+  (chp-route "/testing"
+             (or 
+              (chp-when :post "POST METHOD RETURN")
+              (chp-when :get
+                        (str (format "chp-body wasn't used to access %s from %s with %s"
+                                     ($ uri) ($ ip) ($ user-agent))
+                             (format "<p>Tracking you? DNT HTTP Header = %s</p>" ($$ dnt))
+                             (format "<p>HTTP Header cache-control = %s</p>" ($$ cache-control))))
+              "Not Found"))
 
   ;; Multiple handlers under a single route
 
@@ -125,32 +139,15 @@ The following link is the chtml page that is used in the example below.
                           :-post (str "Post => " display)
                           :-not-found "Sorry, but this page doesn't exist"})))
 
-  ;; Multiple handlers under a single route
+  ;; Bind to templates
 
-  (chp-route "/testing"
-             (or 
-              (chp-when :post "POST METHOD RETURN")
-              (chp-when :get
-                        (str (format "chp-body wasn't used to access %s from %s with %s"
-                                     ($ uri) ($ ip) ($ user-agent))
-                             (format "<p>Tracking you? DNT HTTP Header = %s</p>" ($$ dnt))
-                             (format "<p>HTTP Header cache-control = %s</p>" ($$ cache-control))))
-                 "Not Found"))
-
-  ;; Named params
-
-  (chp-route "/index/:id"
-             (format "ID is %s" 
-                     (escape ($p id))))
-  (chp-route "/index/:id/:action"
-             (format "Action is %s" 
-                     (escape ($p action))))
-
+  (chp-route "/template"
+             (using-template "example.chtml"
+                             {:body "chp-info.chtml"
+                              :test-tag "test-page.chtml"}))
 
   (route/resources "/")
   (route/not-found "Not Found"))
-
-
 
 (def app
   (chp-site example-routes
@@ -367,7 +364,7 @@ ClojureHomePage uses the SQLKorma DSL by default. korma.db is required as kdb an
 
 #### Session handling, Cookies, and Compojure
 
-Because CHP is Compojure based, you can use Compojure and Ring extensions. Already included, but not loaded by default, the lib-noir library is a great helper library for Clojure web development.
+Because CHP is based on Compojure, you can use Compojure and Ring extensions. Already included, but not loaded by default, the lib-noir library is a great helper library for Clojure web development.
 
 
 1. [lib-noir API](http://yogthos.github.io/lib-noir/index.html)
