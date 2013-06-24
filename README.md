@@ -535,6 +535,6 @@ The default configuration for CHP is located in project.clj
 
 ## License
 
-Copyright © 2012 Yogthos
+Copyright © 2013 Runexec
 
 Distributed under the Eclipse Public License, the same as Clojure.
