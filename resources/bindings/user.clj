@@ -14,13 +14,14 @@
 
 ;; View view values
 ;; (chp.builder/binding->view :user 1)
-;; /chp/list/user/:id
+;; site.com/chp/view/user/:id
 
  :view (list :name :password :admin)
 
 ;; Edit view values
 ;; (chp.builder/binding->edit :user 1)
-;; /chp/list/user/:id 
+;; site.com/chp/edit/user/:id 
+;; site.com/chp/new/user
 
 ;; edit is a hash-set with table columns
 ;; as the key and the chp.html namespace

@@ -1,8 +1,7 @@
 (ns chp.builder
   (:use [chp.db
          :only [*db*]]
-        [chp.html
-         :only [label]])
+        chp.html)
   (:require [korma.core :as kc]
             [korma.db :as kdb]))
 
@@ -90,7 +89,20 @@
                   "<br />"
                   (display-fn -value)
                   "<br /><br />")))))
-        
+
+(defn binding->new 
+    "-name = (= :user \"resources/bindings/user.clj\")"
+    [-name]
+    (let [data (-> -name binding->data :edit)]
+      (apply str
+             (for [_ (reverse data)
+                   :let [-name (-> _ key name)
+                         -label (label -name -name)
+                         -display ((-> _ val) "")]]
+                   (format "%s<br />%s<br />"
+                           -label
+                           -display)))))
+              
 (defn binding->enforce
     "-name = (= :user \"resources/bindings/user.clj\")"
     [-name]

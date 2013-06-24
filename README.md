@@ -29,7 +29,7 @@ This framework provides the following
 
 <b> Code Generation </b>
 
-* Page views (view,edit,list)
+* Page views (new,view,edit,list)
 * Generate JavaScript / ECMAScript
 * Generate HTML
 * Generate CSS
@@ -49,7 +49,7 @@ This page serves as project documentation.<br />
 * [JavaScript Generation](#clojure-and-javascript-generation)
 * [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
 * [Ring and port configuration](#ring-configuration)
-
+* [License](#license)
 
 Other Documentation 
 
@@ -362,7 +362,15 @@ example-#
 
 #### Builder Bindings
 
-The example user.clj bindings below will be used to make the list, view, and edit pages of the user table in schema/user.clj.
+The example user.clj bindings below will be used to make the new, list, view, and edit pages of the user table in schema/user.clj.
+
+Th below bindings will produce the following urls.
+
+site.com/chp/list/user
+site.com/chp/new/user
+site.com/chp/view/user/1
+site.com/chp/edit/user/1
+
 
 ```clojure
 ;; Example bindings for resources/schema/user.clj
@@ -381,13 +389,14 @@ The example user.clj bindings below will be used to make the list, view, and edi
 
 ;; View view values
 ;; (chp.builder/binding->view :user 1)
-;; /chp/list/user/:id
+;; site.com/chp/view/user/:id
 
  :view (list :name :password :admin)
 
 ;; Edit view values
 ;; (chp.builder/binding->edit :user 1)
-;; /chp/list/user/:id 
+;; site.com/chp/edit/user/:id 
+;; site.com/chp/new/user
 
 ;; edit is a hash-set with table columns
 ;; as the key and the chp.html namespace
@@ -404,7 +413,6 @@ The example user.clj bindings below will be used to make the list, view, and edi
  :edit-enforce {:name str
                 :password str
                 :admin #(Boolean/valueOf %)}}
-             
 ```
 
 # Builder binding views example
@@ -525,3 +533,8 @@ The default configuration for CHP is located in project.clj
 
 1. [Lein-ring documentation](https://github.com/weavejester/lein-ring)
 
+## License
+
+Copyright © 2012 Yogthos
+
+Distributed under the Eclipse Public License, the same as Clojure.

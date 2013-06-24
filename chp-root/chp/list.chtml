@@ -61,6 +61,10 @@
     (format "/chp/list/%s?offset=%d"
             (name table)
             next-page)
-    "More")))
+    "More")
+    " "
+    (link-to
+    (str "/chp/new/" (name table))
+    "New")))
   </clj>
 </div>
