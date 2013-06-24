@@ -3,17 +3,29 @@
         chp.core
         chp.html
         chp.template
-        [garden.core :only [css]])
+        [chp.db
+         :only [*db*]]
+        [garden.core
+         :only [css]])
   (:require chp.server
-            [compojure.route :as route]
-            [korma.db :as kdb]
-            [korma.core :as kc]
+            [compojure.route
+             :as route]
+            [korma.db
+             :as kdb]
+            [korma.core
+             :as kc]
 
             ;;;;;;;;;;;;;;;;;;; Routes
 
             [chp.routes.example
-             :refer [example-routes]]))
+             :refer [example-routes]]
+            
+            ;;;;;;;;;;;;;;;;;;; CHP Builder
 
+            [chp.routes.chp
+             :refer [chp-builder-paths]]))
+
+(kdb/defdb korma-db *db*)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Routes
 
 (defchp app-routes
@@ -79,5 +91,7 @@
 
 (def app
   (chp-site example-routes
+            chp-builder-paths
             app-routes))
+            
   

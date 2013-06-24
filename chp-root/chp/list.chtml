@@ -1,0 +1,66 @@
+<clj>
+(use '[chp.builder
+       :only [binding->list]])
+
+;; table and id params are escaped
+;; by the route constraints
+
+</clj>
+
+<h1>Viewing table of  <clj>(-> ($p table) escape println)</clj></h1>
+
+<div style="background:yellow;">
+  <clj>
+(let [table (keyword ($p table))
+      offset (or ($p offset) 0)
+      offset (try (Integer. offset) (catch Exception e 0))
+      offset (if (pos? offset) offset 0)
+      limit 10
+      next-page (+ limit offset)
+      items (binding->list table offset limit)]
+
+  ;; Create Table Headers
+
+  (println 
+   (str "<table>"
+        (->> (-> items first keys)
+             (map escape)
+             (map #(format "<th><b>%s</b></th>" %))
+             (apply str)
+             (str "<th>Action</th>")
+             (format "<thead><tr>%s</tr></thead>"))))
+
+  ;; Populate Table
+
+  (doseq [i items
+          :let [item (map escape (vals i))
+                view-info (format "/chp/view/%s/%s"
+                                  (name table)
+                                  (:id i))
+                view-link (link-to view-info "view")
+                edit-info (format "/chp/edit/%s/%s"
+                                  (name table)
+                                  (:id i))
+                edit-link (link-to edit-info "edit")]]
+    (->> item
+         (map #(format "<td>%s</td>" %))
+         (apply str)
+         (str "<td>" view-link " " edit-link "</td>")
+         (format "<tr>%s</tr>")
+         println))
+
+  ;; Close Table
+
+  (println "</table>")
+
+  ;; More Button
+
+  (println
+   (apply str (repeat 2 "<br />"))
+   (link-to
+    (format "/chp/list/%s?offset=%d"
+            (name table)
+            next-page)
+    "More")))
+  </clj>
+</div>
