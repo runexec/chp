@@ -56,7 +56,7 @@ Other Documentation
 1. [How?](#how)
 2. [Tutorial](https://github.com/runexec/chp/tree/master/tutorial/01)
 
-#### Getting started
+# Getting started
 
 1) Download & Run
 
@@ -68,7 +68,7 @@ lein ring server
 
 2) Edit the default app-routes template located at the bottom of src/chp/handler.clj
 
-#### How?
+# How?
 
 By default, the CHTML files are located in chp-root folder of the project folder.
 When a CHTML file is parsed, all public variables of the chp.handler namespace
@@ -76,7 +76,7 @@ are accessible during the evaluation of the ```<clj></clj>``` tags. Use print
  or println within the tags to have the results displayed.
 
 
-#### Example CHTML & Routes
+# Example CHTML & Routes
 
 Routes can be stored in two places
 
@@ -159,7 +159,7 @@ The following link is the chtml page that is used in the example below.
 ```
 
 
-#### Clojure and HTML Generation
+# Clojure and HTML Generation
 
 The following methods presented in the documentation below are 
 accessible from within CHTML files by default. These abstractions
@@ -230,12 +230,12 @@ Please note that these forms DO NOT generate Hiccup code, but HTML.
 
 ```
 
-#### Clojure and CSS Generation
+# Clojure and CSS Generation
 
 ClojureHomePage uses the Garden CSS generation library by default.
 The Garden documentation page is located at https://github.com/noprompt/garden
 
-#### Clojure and JavaScript Generation
+# Clojure and JavaScript Generation
 
 ClojureHomePage uses ClojureScript and lein-cljsbuild to generate javascript.
 CHP uses the directory resources/cljs/ as the default cljs source code directory.
@@ -243,7 +243,7 @@ CHP uses the directory resources/cljs/ as the default cljs source code directory
 1. [lein-cljsbuild Documentation](https://github.com/emezeske/lein-cljsbuild/)
 2. [ClojureScript Documentation](https://github.com/clojure/clojurescript)
 
-#### DB Configuration and Creation
+# DB Configuration and Creation
 
 A Korma SQL and Lobos compatible SQL connection configuration file is located at resources/config/db.clj
 
@@ -272,7 +272,7 @@ The Lobos library handles the table syntax. Below is the user table from user.cl
 1. [Lobos Project & Documentation](https://github.com/budu/lobos)
 2. [More Lobos Documentation](http://budu.github.io/lobos/documentation.html)
 
-#### DB Migrations
+# DB Migrations
 
 <b> Perform migration </b>
 
@@ -360,7 +360,7 @@ example-#
 2. [More Lobos Documentation](http://budu.github.io/lobos/documentation.html)
 
 
-#### Builder Bindings
+# Builder Bindings
 
 The example user.clj bindings below will be used to make the new, list, view, and edit pages of the user table in schema/user.clj.
 
@@ -447,7 +447,7 @@ INFO: MLog clients using java 1.4+ standard logging.
 2013-06-24 15:40:48.064:INFO:oejs.AbstractConnector:Started SelectChannelConnector@0.0.0.0:8000
 Started server on port 8000
 
-###  In another terminal  ###
+#  In another terminal  ###
 
 $ telnet localhost 8000
 Trying ::1...
@@ -503,13 +503,13 @@ Connection closed by foreign host.
 ```
 
 
-#### Clojure and SQL 
+# Clojure and SQL 
 
 ClojureHomePage uses the SQLKorma DSL by default. korma.db is required as kdb and korma.core is required as kc
 
 1. [Korma Documentation](http://www.sqlkorma.com/)
 
-#### Session handling, Cookies, and Compojure
+# Session handling, Cookies, and Compojure
 
 Because CHP is based on Compojure, you can use Compojure and Ring extensions. Already included, but not loaded by default, the lib-noir library is a great helper library for Clojure web development.
 
@@ -519,7 +519,7 @@ Because CHP is based on Compojure, you can use Compojure and Ring extensions. Al
 3. [Ring CSRF protection](https://github.com/weavejester/ring-anti-forgery)
 4. [Ring Middleware Extensions](https://github.com/search?q=ring+middleware&ref=cmdform&type=Repositories)
 
-#### Ring configuration
+# Ring configuration
 
 The default configuration for CHP is located in project.clj
 
@@ -533,7 +533,7 @@ The default configuration for CHP is located in project.clj
 
 1. [Lein-ring documentation](https://github.com/weavejester/lein-ring)
 
-## License
+# License
 
 Copyright © 2013 Runexec
 
