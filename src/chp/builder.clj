@@ -107,3 +107,11 @@
     "-name = (= :user \"resources/bindings/user.clj\")"
     [-name]
     (-> -name binding->data :edit-enforce))
+
+
+(defn binding-exist? [table-name]
+  (let [table (kc/create-entity table-name)]
+    (try (first (kc/select table))
+         true
+         (catch Exception ex false))))
+    
