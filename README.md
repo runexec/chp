@@ -466,12 +466,6 @@ $ telnet localhost 8000
 Trying ::1...
 Connected to localhost.
 Escape character is '^]'.
-GET /chp/list/user/1
-Not FoundConnection closed by foreign host.
-$ telnet localhost 8000
-Trying ::1...
-Connected to localhost.
-Escape character is '^]'.
 GET /chp/view/user/1
 <h1>Viewing  1
 </h1>
