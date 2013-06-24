@@ -29,6 +29,7 @@ This framework provides the following
 
 <b> Code Generation </b>
 
+* Page views (view,edit,list)
 * Generate JavaScript / ECMAScript
 * Generate HTML
 * Generate CSS
@@ -38,6 +39,8 @@ This page serves as project documentation.<br />
 
 * [Install](#getting-started)
 * [CHTML & Routes](#example-chtml--routes)
+* [Generating views with bindings](#builder-bindings)
+* [View generation workflow](#builder-binding-views-example)
 * [SQL DB configuration and creation](#db-configuration-and-creation)
 * [SQL DB Migrations](#db-migrations)
 * [SQL Manipulation](#clojure-and-sql)
@@ -45,7 +48,8 @@ This page serves as project documentation.<br />
 * [CSS Generation](#clojure-and-css-generation)
 * [JavaScript Generation](#clojure-and-javascript-generation)
 * [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
-& [Ring and port configuration](#ring-configuration)
+* [Ring and port configuration](#ring-configuration)
+
 
 Other Documentation 
 
@@ -354,6 +358,147 @@ example-#
 
 1. [Lobos Project & Documentation](https://github.com/budu/lobos)
 2. [More Lobos Documentation](http://budu.github.io/lobos/documentation.html)
+
+
+#### Builder Bindings
+
+The example user.clj bindings below will be used to make the list, view, and edit pages of the user table in schema/user.clj.
+
+```clojure
+;; Example bindings for resources/schema/user.clj
+;; All values will be retrieved by the id column
+
+;; table must match the filename withut the clj extension
+;; user.clj -> user
+
+{:table :user
+
+;; List view value
+;; (chp.builder/binding-list :user 0 10)
+;; /chp/list/user
+
+ :list (list :name :id)
+
+;; View view values
+;; (chp.builder/binding->view :user 1)
+;; /chp/list/user/:id
+
+ :view (list :name :password :admin)
+
+;; Edit view values
+;; (chp.builder/binding->edit :user 1)
+;; /chp/list/user/:id 
+
+;; edit is a hash-set with table columns
+;; as the key and the chp.html namespace
+;; function used to display the value.
+
+ :edit {:name #(text-field :name (escape %))
+        :password #(password-field :password (escape %))
+        :admin #(check-box :admin (Boolean/valueOf %))}
+
+;; enforce data type with fn to check and
+;; or convert before going into database.
+;; The function must take one arg.
+
+ :edit-enforce {:name str
+                :password str
+                :admin #(Boolean/valueOf %)}}
+             
+```
+
+# Builder binding views example
+
+```bash
+$ cd chp
+$ cat resources/schema/user.clj 
+```
+```clojure
+(table :user
+       (integer :id :primary-key :auto-inc)
+       (varchar :name 20)
+       (varchar :password 100)
+       (boolean :admin)
+       (unique [:name]))
+```
+```bash
+$ lein schema
+Creating Table =>  resources/schema/example.clj
+OKAY
+Creating Table =>  resources/schema/user.clj
+OKAY
+$ psql example
+psql (9.2.4)
+Type "help" for help.
+example=# INSERT INTO "user" (name,password,admin) VALUES ('user1','badcleartext',true);
+example=# \q
+$ lein ring server &
+Jun 24, 2013 3:40:47 PM com.mchange.v2.log.MLog <clinit>
+INFO: MLog clients using java 1.4+ standard logging.
+2013-06-24 15:40:47.999:INFO:oejs.Server:jetty-7.6.1.v20120215
+2013-06-24 15:40:48.064:INFO:oejs.AbstractConnector:Started SelectChannelConnector@0.0.0.0:8000
+Started server on port 8000
+
+###  In another terminal  ###
+
+$ telnet localhost 8000
+Trying ::1...
+Connected to localhost.
+Escape character is '^]'.
+GET /chp/list/user
+
+
+<h1>Viewing table of  user
+</h1>
+
+<div style="background:yellow;">
+  <table><thead><tr><th>Action</th><th><b>id</b></th><th><b>name</b></th></tr></thead>
+<tr><td><a href="/chp/view/user/1">view</a> <a href="/chp/edit/user/1">edit</a></td><td>1</td><td>user1</td></tr>
+</table>
+<br /><br /> <a href="/chp/list/user?offset=10">More</a>
+
+</div>
+Connection closed by foreign host.
+
+
+
+$ telnet localhost 8000
+Trying ::1...
+Connected to localhost.
+Escape character is '^]'.
+GET /chp/list/user/1
+Not FoundConnection closed by foreign host.
+$ telnet localhost 8000
+Trying ::1...
+Connected to localhost.
+Escape character is '^]'.
+GET /chp/view/user/1
+<h1>Viewing  1
+</h1>
+
+[name user1]
+[password badcleartext]
+[admin true]
+
+Connection closed by foreign host.
+
+
+
+$ telnet localhost 8000
+Trying ::1...
+Connected to localhost.
+Escape character is '^]'.
+GET /chp/edit/user/1
+
+<h1> Editing user #1 </h1>
+
+<form action="/chp/edit/user/1
+" method="POST">
+<label for=":admin">admin</label><br /><input checked="checked" id="admin" name="admin" type="checkbox" value="true" /><br /><br /><label for=":password">password</label><br /><input id="password" name="password" type="password" value="badcleartext" /><br /><br /><label for=":name">name</label><br /><input id="name" name="name" type="text" value="user1" /><br /><br /> <input type="submit" value="save" />
+
+</form>
+Connection closed by foreign host.
+```
 
 
 #### Clojure and SQL 

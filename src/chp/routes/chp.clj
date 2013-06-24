@@ -7,7 +7,7 @@
 
 (defchp chp-builder-paths
   (chp-route ["/chp/list/:table" :table  #"[a-zA-Z0-9-_.]*"]
-             (root-parse "chp/list.chtml"))
+               (root-parse "chp/list.chtml"))
   (chp-route ["/chp/edit/:table/:id"
               :table  #"[a-zA-Z0-9-_.]*"
               :id #"\d+"]
