@@ -367,11 +367,12 @@ The example user.clj bindings below will be used to make the new, list, view, an
 
 Th below bindings will produce the following urls.
 
+```
 site.com/chp/list/user
 site.com/chp/new/user
 site.com/chp/view/user/1
 site.com/chp/edit/user/1
-
+```
 
 ```clojure
 ;; Example bindings for resources/schema/user.clj
