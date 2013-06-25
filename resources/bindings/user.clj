@@ -35,7 +35,10 @@
 ;; or convert before going into database.
 ;; The function must take one arg.
 
- :edit-enforce {:name str
-                :password str
+;; :name is limited to a string of 20 chars
+;; :password is limited to 100 chars
+;; :admin mut be a boolean value
+ :edit-enforce {:name #(->> % str seq (take 20) (apply str))
+                :password  #(->> % str seq (take 100) (apply str))
                 :admin #(Boolean/valueOf %)}}
              

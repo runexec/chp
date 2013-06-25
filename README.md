@@ -39,8 +39,9 @@ This page serves as project documentation.<br />
 
 * [Install](#getting-started)
 * [CHTML & Routes](#example-chtml--routes)
-* [Generating views with bindings](#builder-bindings)
-* [View generation workflow](#builder-binding-views-example)
+* [Generating views from a table](#generating-table-views)
+* [View bindings](#builder-bindings)
+* [Admin view generation workflow](#builder-binding-views-example)
 * [SQL DB configuration and creation](#db-configuration-and-creation)
 * [SQL DB Migrations](#db-migrations)
 * [SQL Manipulation](#clojure-and-sql)
@@ -502,7 +503,68 @@ GET /chp/edit/user/1
 Connection closed by foreign host.
 ```
 
+# Generating Table Views
 
+```bash
+$ lein gen user
+resources/generation-templates/routes/name.clj -> src/chp/routes/user.clj
+resources/generation-templates/chtml/new.chtml -> chp-root/user/new.chtml
+resources/generation-templates/chtml/edit.chtml -> chp-root/user/edit.chtml
+resources/generation-templates/chtml/view.chtml -> chp-root/user/view.chtml
+resources/generation-templates/chtml/list.chtml -> chp-root/user/list.chtml
+URL DATA BOUND TO => resources/bindings/user.clj 
+site.com/new/user 
+site.com/list/user 
+site.com/edit/user/:id 
+site.com/view/user/:id
+$ cat resources/bindings/user.clj
+```
+```clojure
+;; Example bindings for resources/schema/user.clj
+;; All values will be retrieved by the id column
+
+;; table must match the filename withut the clj extension
+;; user.clj -> user
+
+{:table :user
+
+;; List view value
+;; (chp.builder/binding-list :user 0 10)
+;; /chp/list/user
+
+ :list (list :name :id)
+
+;; View view values
+;; (chp.builder/binding->view :user 1)
+;; site.com/chp/view/user/:id
+
+ :view (list :name :password :admin)
+
+;; Edit view values
+;; (chp.builder/binding->edit :user 1)
+;; site.com/chp/edit/user/:id 
+;; site.com/chp/new/user
+
+;; edit is a hash-set with table columns
+;; as the key and the chp.html namespace
+;; function used to display the value.
+
+ :edit {:name #(text-field :name (escape %))
+        :password #(password-field :password (escape %))
+        :admin #(check-box :admin (Boolean/valueOf %))}
+
+;; enforce data type with fn to check and
+;; or convert before going into database.
+;; The function must take one arg.
+
+;; :name is limited to a string of 20 chars
+;; :password is limited to 100 chars
+;; :admin mut be a boolean value
+ :edit-enforce {:name #(->> % str seq (take 20) (apply str))
+                :password  #(->> % str seq (take 100) (apply str))
+                :admin #(Boolean/valueOf %)}}
+```
+             
 # Clojure and SQL 
 
 ClojureHomePage uses the SQLKorma DSL by default. korma.db is required as kdb and korma.core is required as kc

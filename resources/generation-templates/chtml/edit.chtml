@@ -1,0 +1,45 @@
+<clj>
+(use '[chp.builder
+       :only [binding->edit
+              binding->enforce]])
+
+;; id param escaped by the route constraints
+</clj>
+
+
+<h1> Editing {{name}} </h1>
+
+<form action="<clj>(println ($ uri))</clj>" method="POST">
+<clj>
+
+;; Incase updates, update before display
+
+(when (= :post ($ method))
+  (let [table (kc/create-entity "{{name}}")
+        values (dissoc ($ params) :table :id)
+        enforcer (-> "{{name}}" keyword binding->enforce)
+        -where {:id (Integer. ($p id))}
+        add-missing-fields (->> (keys enforcer)
+                                (filter #(nil? (% values)))
+                                (map #(hash-map % nil))
+                                (reduce merge)
+                                (reduce #(assoc %1 (key %2) (val %2))
+                                        values))                                        
+        fields (let [_ add-missing-fields]
+                 (zipmap (keys _)
+                         (map #((%1 enforcer) %2)
+                              (keys _)
+                              (vals _))))]
+      (kc/update table
+                 (kc/set-fields fields)
+                 (kc/where -where))))
+
+;; Display Edit View
+
+(println
+ (binding->edit
+  (keyword "{{name}}")
+  (Integer. ($p id)))
+ (submit-button :save))
+</clj>
+</form>

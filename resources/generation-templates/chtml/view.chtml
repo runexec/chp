@@ -1,0 +1,15 @@
+<h1>Viewing  <clj>(-> ($p id) escape println)</clj></h1>
+
+<clj>
+(use '[chp.builder
+       :only [binding->view]])
+
+;; id param escabed by the route constraints
+
+(doseq [_ (escape-map
+           (binding->view (keyword "{{name}}")
+                          (Integer. ($p id))))]
+  (println _))
+</clj>
+
+

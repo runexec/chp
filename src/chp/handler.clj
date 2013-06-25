@@ -15,15 +15,17 @@
             [korma.core
              :as kc]
 
+            ;;;;;;;;;;;;;;;;;;; CHP Builder
+
+            [chp.routes.chp
+             :refer [chp-builder-paths]]
+
             ;;;;;;;;;;;;;;;;;;; Routes
 
             [chp.routes.example
              :refer [example-routes]]
-            
-            ;;;;;;;;;;;;;;;;;;; CHP Builder
-
-            [chp.routes.chp
-             :refer [chp-builder-paths]]))
+            [chp.routes.user
+             :refer [user-table-routes]]))
 
 (kdb/defdb korma-db *db*)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Routes
@@ -91,6 +93,7 @@
 
 (def app
   (chp-site example-routes
+            user-table-routes
             chp-builder-paths
             app-routes))
             
