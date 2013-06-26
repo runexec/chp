@@ -41,11 +41,13 @@
       (println from "->" to)
       (spit to data))))
 
-(defn builder->gen [table-name]
-  (routes->gen table-name)
-  (chtml->gen table-name)
-  (println "URL DATA BOUND TO => resources/bindings/user.clj"
-           "\nsite.com/new/user"
-           "\nsite.com/list/user"
-           "\nsite.com/edit/user/:id"
-           "\nsite.com/view/user/:id"))
+(defn builder->gen [& table-names]
+  (doseq [table-name table-names]
+    (routes->gen table-name)
+    (chtml->gen table-name)
+    (println 
+     (str "URL DATA BOUND TO => resources/bindings/" table-name ".clj")
+     (str "\nsite.com/new/" table-name)
+     (str "\nsite.com/list/" table-name)
+     (str "\nsite.com/edit/" table-name "/:id")
+     (str "\nsite.com/view/" table-name "/:id"))))
