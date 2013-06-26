@@ -579,7 +579,7 @@ ClojureHomePage uses the SQLKorma DSL by default. korma.db is required as kdb an
 
 Sessions are handled with the lib-noir.session namespace under the session alias.
 
-* [lib-noir session API](yogthos.github.io/lib-noir/noir.session.html)
+* [lib-noir session API](https://yogthos.github.io/lib-noir/noir.session.html)
 
 This session example can be accessed at site.com/session
 ```clojure
