@@ -50,6 +50,7 @@ This page serves as project documentation.<br />
 * [JavaScript Generation](#clojure-and-javascript-generation)
 * [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
 * [Ring and port configuration](#ring-configuration)
+* [Removing example files](#removing-example-files)
 * [License](#license)
 
 Other Documentation 
@@ -625,6 +626,26 @@ The default configuration for CHP is located in project.clj
 ```
 
 1. [Lein-ring documentation](https://github.com/weavejester/lein-ring)
+
+
+# Removing Example Files
+
+```bash
+$ ls 
+chp-examples/  chp-root/  resources/  src/  target/  test/  tutorial/  project.clj README.md
+$ lein chp-clean
+Removing README.md
+Removing resources/schema
+Removing resources/schema/example.clj
+Removing resources/schema/user.clj
+Removing resources/bindings
+Removing resources/bindings/user.clj
+Removing resources/migrations
+Removing resources/migrations/02-add-tag-table.clj
+Removing resources/migrations/01-add-topic-tables.clj
+$ ls
+chp-root/  resources/  src/  target/  test/  project.clj
+```
 
 # License
 
