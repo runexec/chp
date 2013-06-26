@@ -35,25 +35,36 @@ This framework provides the following
 * Generate CSS
 
 
-This page serves as project documentation.<br />
+# Documentation
+
+<b> General Information </b>
 
 * [Install](#getting-started)
+* [Removing example files](#removing-example-files)	
+* [License](#license)
+
+<b> CHTML, Routing, and Sessions </b>
+
 * [CHTML & Routes](#example-chtml--routes)
+* [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
+* [Ring and port configuration](#ring-configuration)
+
+<b> Code Generation </b>
+
 * [Generating views from a table](#generating-table-views)
 * [View bindings](#builder-bindings)
 * [Admin view generation workflow](#builder-binding-views-example)
-* [SQL DB configuration and creation](#db-configuration-and-creation)
-* [SQL DB Migrations](#db-migrations)
-* [SQL Manipulation](#clojure-and-sql)
 * [HTML Generation](#clojure-and-html-generation)
 * [CSS Generation](#clojure-and-css-generation)
 * [JavaScript Generation](#clojure-and-javascript-generation)
-* [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
-* [Ring and port configuration](#ring-configuration)
-* [Removing example files](#removing-example-files)
-* [License](#license)
 
-Other Documentation 
+<b> SQL Configuration, Migrations, and Manipulation </b>
+
+* [SQL DB configuration and creation](#db-configuration-and-creation)
+* [SQL DB Migrations](#db-migrations)
+* [SQL Manipulation](#clojure-and-sql)
+
+<b> Other Documentation </b>
 
 1. [How?](#how)
 2. [Tutorial](https://github.com/runexec/chp/tree/master/tutorial/01)
@@ -234,20 +245,6 @@ Please note that these forms DO NOT generate Hiccup code, but HTML.
 (unordered-list attr-map? coll)
 
 ```
-
-# Clojure and CSS Generation
-
-ClojureHomePage uses the Garden CSS generation library by default.
-The Garden documentation page is located at https://github.com/noprompt/garden
-
-# Clojure and JavaScript Generation
-
-ClojureHomePage uses ClojureScript and lein-cljsbuild to generate javascript.
-CHP uses the directory resources/cljs/ as the default cljs source code directory.
-
-1. [lein-cljsbuild Documentation](https://github.com/emezeske/lein-cljsbuild/)
-2. [ClojureScript Documentation](https://github.com/clojure/clojurescript)
-
 # DB Configuration and Creation
 
 A Korma SQL and Lobos compatible SQL connection configuration file is located at resources/config/db.clj
@@ -605,7 +602,7 @@ Because CHP is based on Compojure, you can use Compojure and Ring extensions. Th
       wrap-noir-session))
 ```
 
- Already included, but not loaded by default (except noir.session), the lib-noir library is a great helper library for Clojure web development.
+Already included, but not loaded by default (except noir.session), the lib-noir library is a great helper library for Clojure web development.
 
 
 1. [lib-noir API](http://yogthos.github.io/lib-noir/index.html)
@@ -627,6 +624,18 @@ The default configuration for CHP is located in project.clj
 
 1. [Lein-ring documentation](https://github.com/weavejester/lein-ring)
 
+# Clojure and CSS Generation
+
+ClojureHomePage uses the Garden CSS generation library by default.
+The Garden documentation page is located at https://github.com/noprompt/garden
+
+# Clojure and JavaScript Generation
+
+ClojureHomePage uses ClojureScript and lein-cljsbuild to generate javascript.
+CHP uses the directory resources/cljs/ as the default cljs source code directory.
+
+1. [lein-cljsbuild Documentation](https://github.com/emezeske/lein-cljsbuild/)
+2. [ClojureScript Documentation](https://github.com/clojure/clojurescript)
 
 # Removing Example Files
 
