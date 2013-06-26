@@ -19,7 +19,8 @@
   :aliases {"schema" ["run" "-m" "chp.schema/load-schemas"]
             "migrate" ["run" "-m" "chp.migration/chp-migrate"]
             "rollback" ["run" "-m" "chp.migration/chp-rollback"]
-            "gen" ["run" "-m" "chp.generator/builder->gen"]}
+            "gen" ["run" "-m" "chp.generator/builder->gen"]
+            "chp-clean" ["run" "-m" "chp.clean/clean"]}
   :cljsbuild {:builds [{:source-paths ["resources/cljs"]
                         :compiler {:output-to "resources/public/js/main.js"
                                    :optimizations :whitespace
