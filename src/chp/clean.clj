@@ -26,7 +26,9 @@
     (doseq [fp -files
             :let [path (.. fp getPath)]]
       (println "Removing" path)
-      (.. fp delete))))
+      (.. fp delete))
+    (doseq [fp (map clojure.java.io/file file-paths)]
+      (.. fp mkdir))))
 
 (defn clean []
   (remove-files files file-paths)

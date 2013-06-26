@@ -645,6 +645,8 @@ Removing resources/migrations/02-add-tag-table.clj
 Removing resources/migrations/01-add-topic-tables.clj
 $ ls
 chp-root/  resources/  src/  target/  test/  project.clj
+$ ls resources/
+bindings/  cljs/  config/  generation-templates/  migrations/  public/  schema/
 ```
 
 # License
