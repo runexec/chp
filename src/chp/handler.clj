@@ -14,6 +14,8 @@
              :as kdb]
             [korma.core
              :as kc]
+            [noir.session
+             :as session]
 
             ;;;;;;;;;;;;;;;;;;; CHP Builder
 
@@ -28,6 +30,7 @@
              :refer [user-table-routes]]))
 
 (kdb/defdb korma-db *db*)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Routes
 
 (defchp app-routes
@@ -42,6 +45,9 @@
 	     ;; root-parse = root-path "/" file
              (or (root-parse "chp-info.chtml")
                  "error"))
+  (chp-route "/session"
+            (or (root-parse "session-example.chtml")
+                "error"))
 
   ;; Named params
 

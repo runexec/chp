@@ -1,0 +1,9 @@
+You have viewed this page 
+
+<clj>
+(let [k :view-count
+      inc-view (k (session/update-in! [k] inc))]
+  (print inc-view))
+</clj>
+
+time(s).

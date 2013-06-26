@@ -105,6 +105,9 @@ The following link is the chtml page that is used in the example below.
 	     ;; root-parse = root-path "/" file
              (or (root-parse "chp-info.chtml")
                  "error"))
+  (chp-route "/session"
+            (or (root-parse "session-example.chtml")
+                "error"))
 
   ;; Named params
 
@@ -574,7 +577,34 @@ ClojureHomePage uses the SQLKorma DSL by default. korma.db is required as kdb an
 
 # Session handling, Cookies, and Compojure
 
-Because CHP is based on Compojure, you can use Compojure and Ring extensions. Already included, but not loaded by default, the lib-noir library is a great helper library for Clojure web development.
+Sessions are handled with the lib-noir.session namespace under the session alias.
+
+* [lib-noir session API](yogthos.github.io/lib-noir/noir.session.html
+
+This session example can be accessed at site.com/session
+```clojure
+You have viewed this page 
+
+<clj>
+(let [k :view-count
+      inc-view (k (session/update-in! [k] inc))]
+  (print inc-view))
+</clj>
+
+time(s).
+```
+
+Because CHP is based on Compojure, you can use Compojure and Ring extensions. These middleware extensions should be added to the chp-routing function of the chp.core namespace. Below is what the function currently looks like.
+```clojure
+(defn chp-routing [& -chp-routes]
+  ;;; (-> (apply routes ...) middleware-wrap xyz-wrap)
+  (-> (apply routes
+             (reduce into [] -chp-routes))
+      wrap-noir-flash
+      wrap-noir-session))
+```
+
+ Already included, but not loaded by default (except noir.session), the lib-noir library is a great helper library for Clojure web development.
 
 
 1. [lib-noir API](http://yogthos.github.io/lib-noir/index.html)

@@ -1,5 +1,8 @@
 (ns chp.core
-  (:use compojure.core)
+  (:use compojure.core
+        [noir.session
+         :only [wrap-noir-flash
+                wrap-noir-session]])
   (:require chp.server
             [compojure.handler :as handler]
             [clojure.string
@@ -138,8 +141,11 @@
   `(def ~-symbol (chp-routes ~@chp-routes)))
 
 (defn chp-routing [& -chp-routes]
-  (apply routes
-         (reduce into [] -chp-routes)))
+  ;;; (-> (apply routes ...) middleware-wrap xyz-wrap)
+  (-> (apply routes
+             (reduce into [] -chp-routes))
+      wrap-noir-flash
+      wrap-noir-session))
 
 (defn chp-site [& defchp-routes]
   (handler/site
