@@ -7,8 +7,7 @@
         (lobos core
                connectivity
                migration)))
-                  
-         
+
 (def migration-dir "resources/migrations/")
 
 (defn- chp-migrations 
