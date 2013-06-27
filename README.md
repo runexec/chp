@@ -37,12 +37,6 @@ This framework provides the following
 
 # Documentation
 
-<b> General Information </b>
-
-* [Install](#getting-started)
-* [Removing example files](#removing-example-files)	
-* [License](#license)
-
 <b> CHTML, Routing, and Sessions </b>
 
 * [CHTML & Routes](#example-chtml--routes)
@@ -63,6 +57,12 @@ This framework provides the following
 * [SQL DB configuration and creation](#db-configuration-and-creation)
 * [SQL DB Migrations](#db-migrations)
 * [SQL Manipulation](#clojure-and-sql)
+
+<b> General Information </b>
+
+* [Install](#getting-started)
+* [Removing example files](#removing-example-files)	
+* [License](#license)
 
 <b> Other Documentation </b>
 
