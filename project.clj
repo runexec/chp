@@ -14,7 +14,8 @@
   :ring {:port 8000
          :auto-reload? true
          :auto-refresh? true
-         :reload-paths ["src/chp/"]
+         :reload-paths ["src/chp/"
+                        "chp-root/"]
          :handler chp.handler/app}
   :aliases {"schema" ["run" "-m" "chp.schema/load-schemas"]
             "migrate" ["run" "-m" "chp.migration/chp-migrate"]
