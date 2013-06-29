@@ -42,6 +42,7 @@ This framework provides the following
 * [CHTML & Routes](#example-chtml--routes)
 * [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
 * [Ring and port configuration](#ring-configuration)
+* [Enable admin account](#enable-admin-account)
 
 <b> Code Generation </b>
 
@@ -623,6 +624,109 @@ The default configuration for CHP is located in project.clj
 ```
 
 1. [Lein-ring documentation](https://github.com/weavejester/lein-ring)
+
+
+# Enable Admin Account
+
+```bash
+[user@machine ~]$ cd /tmp/; mkdir admin-example; cd admin-example;
+[user@machine admin-example]$ git clone https://github.com/runexec/chp.git
+Cloning into 'chp'...
+remote: Counting objects: 594, done.
+remote: Compressing objects: 100% (331/331), done.
+remote: Total 594 (delta 287), reused 501 (delta 194)
+Receiving objects: 100% (594/594), 160.96 KiB | 34.00 KiB/s, done.
+Resolving deltas: 100% (287/287), done.
+[user@machine admin-example]$ cd chp/
+[user@machine chp]$ ls
+chp-examples/  chp-root/  resources/  src/  test/  tutorial/  project.clj  README.md
+[user@machine chp]$ rm -rf chp-examples/ tutorial/ 
+[user@machine chp]$ cat resources/schema/user.clj 
+```
+```clojure
+(table :user
+       (integer :id :primary-key :auto-inc)
+       (varchar :name 20)
+       (varchar :password 128)
+       (varchar :salt 128)
+       (boolean :admin)
+       (unique [:name]))
+```
+```bash
+[user@machine chp]$ lein schema
+Creating Table =>  resources/schema/user.clj
+OKAY
+Creating Table =>  resources/schema/example.clj
+OKAY
+[user@machine chp]$ lein migrate
+Jun 30, 2013 2:47:07 AM com.mchange.v2.log.MLog <clinit>
+INFO: MLog clients using java 1.4+ standard logging.
+create-chp-admin
+```
+
+The admin password is located in the migration file resources/migrations/01-add-admin.clj
+<br />
+;; (chp.password/salt-set "your password here")
+```bash 
+[user@machine chp]$ cat resources/migrations/01-add-admin.clj
+```
+
+```clojure
+(let [table (kc/create-entity "user")]
+
+  (comment Assuming resources/schema/user.clj
+           (table :user
+                  (integer :id :primary-key :auto-inc)
+                  (varchar :name 20)
+                  (varchar :password 128)
+                  (varchar :salt 128)
+                  (boolean :admin)
+                  (unique [:name])))
+
+  (defmigration create-chp-admin
+    (up []
+        (let [{:keys [salt
+                      password]} (chp.password/salt-set "admin")]
+          (kc/insert table
+                     (kc/values
+                      {:name "admin"
+                       :password password
+                       :salt salt
+                       :admin true}))))
+    (down []
+          (kc/delete table
+                     (kc/where {:name "admin"})))))
+```
+```bash
+[user@machine chp]$ lein ring server
+Jun 30, 2013 2:54:20 AM com.mchange.v2.log.MLog <clinit>
+INFO: MLog clients using java 1.4+ standard logging.
+2013-06-30 02:54:21.391:INFO:oejs.Server:jetty-7.6.1.v20120215
+2013-06-30 02:54:21.489:INFO:oejs.AbstractConnector:Started SelectChannelConnector@0.0.0.0:8000
+Started server on port 8000
+
+### In a new shell ### 
+
+[user@machine chp]$ curl --data "username=admin&password=admin" http://localhost:8000/chp/login
+
+<html>
+<head><title>Login Handler</title></head>
+<body>
+Logged in{:user "admin", :logged-in? true}
+
+</body>
+</html>
+
+[user@machine chp]$ curl --data "username=admin&password=adminadasdsad" http://localhost:8000/chp/login
+
+<html>
+<head><title>Login Handler</title></head>
+<body>
+Login Failed
+
+</body>
+</html>
+```
 
 # Clojure and CSS Generation
 
