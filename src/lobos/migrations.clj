@@ -11,11 +11,12 @@
                schema
                helpers
                connectivity)
+        chp.password
         [chp.db 
          :only [*db*]]
         [chp.migration 
          :only [load-migrations]]))
 
-(eval (load-migrations))
+ (eval (load-migrations))
 
 
