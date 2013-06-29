@@ -5,11 +5,16 @@
 
 (defn display? [] (binding-exist? ($p table)))
 
+(defchp chp-builder-paths
+  (chp-route "/chp/login"
+             (or (chp-when :get (root-parse "chp/login.chtml"))
+                 (chp-when :post (root-parse "chp/login-session.chtml"))
+                 "Not Found"))
+
 ;; :table gets passed to functions in chp.builder, and these functions
 ;; turn the :table->:keyword to resources/bindings/keyword.clj. Removing the 
 ;; regex restraints can be potentially dangerous.
 
-(defchp chp-builder-paths
   (chp-route ["/chp/list/:table" :table  #"[a-zA-Z0-9-_.]*"]
              (if (display?)
                (root-parse "chp/list.chtml")

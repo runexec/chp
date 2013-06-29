@@ -33,7 +33,7 @@
     (->> (kc/where login)
          (kc/select table (kc/fields [:id]))
          first
-         boolean))) 
+         boolean)))
 
 (defn admin?
   [user 

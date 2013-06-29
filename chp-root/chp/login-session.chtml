@@ -1,0 +1,20 @@
+<clj>
+(use '[chp.login
+       :only [login?]])
+</clj>
+<html>
+<head><title>Login Handler</title></head>
+<body>
+<clj>
+(let [user ($p username)
+      login (login? user ($p password))]
+  (println
+   (if-not login
+     "Login Failed"
+     (let [-session (map #(apply session/put! %)
+                         [[:logged-in? true]
+                          [:user user]])]
+       (str "Logged in" (apply merge -session))))))
+</clj>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<html>
+<head><title>Login</title></head>
+<body>
+<clj>
+(println
+ (form-to [:post "/chp/login"]
+          (format "%s<br />%s"
+                  (label "username-label" "username")
+                  (text-field "username"))
+          (format "<p>%s<br />%s</p>"
+                  (label "pass-label" "password")
+                  (password-field "password"))
+               (submit-button "Login")))
+</clj>
+</body>
+</html>
