@@ -17,6 +17,7 @@
         [chp.migration 
          :only [load-migrations]]))
 
- (eval (load-migrations))
 
+(kdb/defdb korma-db *db*)
 
+(eval (load-migrations))

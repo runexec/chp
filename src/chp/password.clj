@@ -14,10 +14,16 @@
   ([] (salt
        (reduce #(password %2 %1)
                (take 10
-                     (iterate rand-int 100)))))
+                     (iterate rand-int 1000)))))
   ([& [base]]
      (if base
        (password base base)
        base)))
+
+(defn salt-set [s]
+  (let [-salt (salt)]
+    {:salt -salt
+     :password (password -salt s)
+     :clear-text s}))
                
                     
