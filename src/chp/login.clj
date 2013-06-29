@@ -28,3 +28,19 @@
          (kc/select {:table "user"})
          first
          boolean)))
+
+(defn admin?
+  [user 
+   & {:keys
+      [username-column
+       admin-column]
+      :or {username-column :name
+           admin-column :admin}}]
+  (let [uc (keyword username-column)
+        ac (keyword admin-column)
+        admin {uc user
+               ac true}]
+    (->> (kc/where admin)
+         (kc/select {:table "user"})
+         first
+         boolean)))
