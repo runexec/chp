@@ -14,7 +14,6 @@
 (defn login?
   [user
    secret
-   salt 
    & {:keys
       [username-column
        password-column]
@@ -22,12 +21,19 @@
            password-column :password}}]
   (let [[uc pc] [(keyword username-column)
                  (keyword password-column)]
-        login {uc user
-               pc (password salt secret)}]
+        user {uc user}
+        table {:table "user"}
+        salt (->> (kc/where user)
+                  (kc/select table (kc/fields [:salt]))
+                  first
+                  :salt)
+        login (assoc user
+                :password
+                (password salt secret))]
     (->> (kc/where login)
-         (kc/select {:table "user"})
+         (kc/select table (kc/fields [:id]))
          first
-         boolean)))
+         boolean))) 
 
 (defn admin?
   [user 
