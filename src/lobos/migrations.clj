@@ -12,6 +12,7 @@
                helpers
                connectivity)
         chp.password
+        chp.login
         [chp.db 
          :only [*db*]]
         [chp.migration 
