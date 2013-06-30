@@ -10,18 +10,6 @@
   
 (kdb/defdb korma-db *db*)
 
-
-(defn login-id 
-  [user
-   & {:keys [username-column]
-      :or {username-column :name}}]
-  (let [column (keyword username-column)
-        -user {column (str user)}]
-    (->> (kc/where -user)
-         (kc/select {:table "user"} (kc/fields [:id]))
-         first
-         :id)))
-
 (defn login?
   [user
    secret
@@ -61,3 +49,25 @@
          (kc/select {:table "user"})
          first
          boolean)))
+
+(defn login-id 
+  [user
+   & {:keys [username-column]
+      :or {username-column :name}}]
+  (let [column (keyword username-column)
+        -user {column (str user)}]
+    (->> (kc/where -user)
+         (kc/select {:table "user"} (kc/fields [:id]))
+         first
+         :id)))
+
+(defn login-salt
+  [user
+   & {:keys [username-column]
+      :or {username-column :name}}]
+  (let [column (keyword username-column)
+        -user {column (str user)}]
+    (->> (kc/where -user)
+         (kc/select {:table "user"} (kc/fields [:salt]))
+         first
+         :salt)))
