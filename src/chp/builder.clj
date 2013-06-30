@@ -1,9 +1,16 @@
 (ns chp.builder
   (:use [chp.db
          :only [*db*]]
-        chp.html)
-  (:require [korma.core :as kc]
-            [korma.db :as kdb]))
+        chp.core
+        chp.html
+        chp.password
+        [chp.login :exclude [korma-db]])
+  (:require [korma.core
+             :as kc]
+            [korma.db
+             :as kdb]
+            [noir.session
+             :as session]))
 
 (kdb/defdb korma-db *db*)
 
