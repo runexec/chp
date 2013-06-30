@@ -48,7 +48,7 @@ This framework provides the following
 
 * [Generating views from a table](#generating-table-views)
 * [View bindings](#builder-bindings)
-* [View Generation Example](#builder-binding-views-example)
+* [View bindings Example](#builder-binding-views-example)
 * [Enable admin account](#enable-admin-account)
 * [HTML Generation](#clojure-and-html-generation)
 * [CSS Generation](#clojure-and-css-generation)
