@@ -71,3 +71,14 @@
          (kc/select {:table "user"} (kc/fields [:salt]))
          first
          :salt)))
+
+(defn login-password
+  [user
+   & {:keys [username-column]
+      :or {username-column :name}}]
+  (let [column (keyword username-column)
+        -user {column (str user)}]
+    (->> (kc/where -user)
+         (kc/select {:table "user"} (kc/fields [:password]))
+         first
+         :password)))
