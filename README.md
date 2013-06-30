@@ -527,7 +527,6 @@ Trying ::1...
 Connected to localhost.
 Escape character is '^]'.
 GET /chp/edit/user/1
-```
 
 <h1> Editing user #1 </h1>
 
@@ -536,7 +535,7 @@ GET /chp/edit/user/1
 <label for=":admin">admin</label><br /><input checked="checked" id="admin" name="admin" type="checkbox" value="true" /><br /><br /><label for=":password">password</label><br /><input id="password" name="password" type="password" value="badcleartext" /><br /><br /><label for=":name">name</label><br /><input id="name" name="name" type="text" value="user1" /><br /><br /> <input type="submit" value="save" />
 
 </form>
-```bash
+
 Connection closed by foreign host.
 ```
         
