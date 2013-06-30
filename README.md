@@ -1,39 +1,23 @@
 #### CHP [![endorse](https://api.coderwall.com/runexec/endorsecount.png)](https://coderwall.com/runexec)
-ClojureHomePage is a Clojure Web Framework
+ClojureHomePage is a Clojure Web Framework that provides the following.
 
-This framework provides the following
-
-<b> Clojure on the front end </b>
 
 * Run Clojure inside a HTML file with the ```<clj></clj>``` tags
-* Style templates can be written in CHTML ex. chp.template/using-template
-
-<b> Parameters  </b>
-
 * Request params ex. ($p userid)
 * Common web headers ex. ($ user-agent)
 * Web Headers ex. ($$ cache-control)
 * Environmental variables ex. (env java.vm.name)
-
-<b> Path Routing </b>
-
 * Have multiple method handlers under a single route (get, post, put, delete, and head)
 * Routes can be defined in seperate files and namespaces
-
-<b> DB </b>
-
+* Style templates can be written in CHTML ex. chp.template/using-template
 * Create SQL database schemas ex. lein schema
 * Perform SQL database migrations ex. lein migrate
 * Perform migration rollbacks ex. lein rollback
 * Manipulate SQL databases with KormaSQL
-
-<b> Code Generation </b>
-
-* Page views (new,view,edit,list)
+* Generate Page views (new,view,edit,list)
 * Generate JavaScript / ECMAScript
 * Generate HTML
 * Generate CSS
-
 
 # Documentation
 
