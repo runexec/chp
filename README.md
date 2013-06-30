@@ -42,13 +42,14 @@ This framework provides the following
 * [CHTML & Routes](#example-chtml--routes)
 * [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
 * [Ring and port configuration](#ring-configuration)
-* [Enable admin account](#enable-admin-account)
+
 
 <b> Code Generation </b>
 
 * [Generating views from a table](#generating-table-views)
 * [View bindings](#builder-bindings)
-* [Admin view generation workflow](#builder-binding-views-example)
+* [View Generation Example](#builder-binding-views-example)
+* [Enable admin account](#enable-admin-account)
 * [HTML Generation](#clojure-and-html-generation)
 * [CSS Generation](#clojure-and-css-generation)
 * [JavaScript Generation](#clojure-and-javascript-generation)
@@ -64,31 +65,8 @@ This framework provides the following
 * [Install](#getting-started)
 * [Removing example files](#removing-example-files)	
 * [License](#license)
-
-<b> Other Documentation </b>
-
-1. [How?](#how)
-2. [Tutorial](https://github.com/runexec/chp/tree/master/tutorial/01)
-
-# Getting started
-
-1) Download & Run
-
-```bash
-git clone https://github.com/runexec/chp
-cd chp
-lein ring server
-```
-
-2) Edit the default app-routes template located at the bottom of src/chp/handler.clj
-
-# How?
-
-By default, the CHTML files are located in chp-root folder of the project folder.
-When a CHTML file is parsed, all public variables of the chp.handler namespace
-are accessible during the evaluation of the ```<clj></clj>``` tags. Use print
- or println within the tags to have the results displayed.
-
+* [How?](#how)
+* [Tutorial](https://github.com/runexec/chp/tree/master/tutorial/01)
 
 # Example CHTML & Routes
 
@@ -101,6 +79,8 @@ The following link is the chtml page that is used in the example below.
 <a href="https://github.com/runexec/chp/blob/master/chp-root/test-page.chtml">
    test-page.chtml
 </a>
+
+More CHTML examples are located in <a href="https://github.com/runexec/chp/blob/master/chp-root/">chp-root</a>
 
 <b> Routes Example </b>
 
@@ -175,77 +155,58 @@ The following link is the chtml page that is used in the example below.
             app-routes))
 ```
 
+# Session handling, Cookies, and Compojure
 
-# Clojure and HTML Generation
+Sessions are handled with the lib-noir.session namespace under the session alias.
 
-The following methods presented in the documentation below are 
-accessible from within CHTML files by default. These abstractions
-are drop-in replacements for the Hiccup API located at http://weavejester.github.io/hiccup/.
-Please note that these forms DO NOT generate Hiccup code, but HTML.
+* [lib-noir session API](https://yogthos.github.io/lib-noir/noir.session.html)
 
+This session example can be accessed at site.com/session
+```clojure
+You have viewed this page 
+
+<clj>
+(let [k :view-count
+      inc-view (k (session/update-in! [k] inc))]
+  (print inc-view))
+</clj>
+
+time(s).
+```
+
+Because CHP is based on Compojure, you can use Compojure and Ring extensions. These middleware extensions should be added to the chp-routing function of the chp.core namespace. Below is what the function currently looks like.
+```clojure
+(defn chp-routing [& -chp-routes]
+  ;;; (-> (apply routes ...) middleware-wrap xyz-wrap)
+  (-> (apply routes
+             (reduce into [] -chp-routes))
+      wrap-noir-flash
+      wrap-noir-session))
+```
+
+Already included, but not loaded by default (except noir.session), the lib-noir library is a great helper library for Clojure web development.
+
+
+1. [lib-noir API](http://yogthos.github.io/lib-noir/index.html)
+2. [lib-noir Github](https://github.com/noir-clojure/lib-noir)
+3. [Ring CSRF protection](https://github.com/weavejester/ring-anti-forgery)
+4. [Ring Middleware Extensions](https://github.com/search?q=ring+middleware&ref=cmdform&type=Repositories)
+
+# Ring configuration
+
+The default configuration for CHP is located in project.clj
 
 ```clojure
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Form Fields
-
-(escape string)
-
-(url-encode string)
-
-(check-box attr-map? name)
-(check-box attr-map? name checked?)
-(check-box attr-map? name checked? value)
-
-(drop-down attr-map? name options)
-(drop-down attr-map? name options selected)
-
-(email-field attr-map? name)
-(email-field attr-map? name value)
-
-(file-upload attr-map? name)
-
-(form-to attr-map? [method action] & body)
-
-(hidden-field attr-map? name)
-(hidden-field attr-map? name value)
-
-(label attr-map? name text)
-
-(password-field attr-map? name)
-(password-field attr-map? name value)
-
-(radio-button attr-map? group)
-(radio-button attr-map? group checked?)
-(radio-button attr-map? group checked? value)
-
-(reset-button attr-map? text)
-
-(select-options attr-map? coll)
-(select-options attr-map? coll selected)
-
-(submit-button attr-map? text)
-
-(text-area attr-map? name)
-(text-area attr-map? name value)
-
-(text-field attr-map? name)
-(text-field attr-map? name value)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Common Elements
-
-(javascript-tag script)
-
-(image attr-map? src)
-(image attr-map? src alt)
-
-(link-to attr-map? url & content)
-
-(mail-to attr-map? e-mail & [content])
-
-(ordered-list attr-map? coll)
-
-(unordered-list attr-map? coll)
-
+:ring {:port 8000
+       :auto-reload? true
+       :auto-refresh? true
+       :reload-paths ["src/chp/"]
+       :handler chp.handler/app}
 ```
+
+1. [Lein-ring documentation](https://github.com/weavejester/lein-ring)
+
+
 # DB Configuration and Creation
 
 A Korma SQL and Lobos compatible SQL connection configuration file is located at resources/config/db.clj
@@ -362,6 +323,74 @@ example-#
 1. [Lobos Project & Documentation](https://github.com/budu/lobos)
 2. [More Lobos Documentation](http://budu.github.io/lobos/documentation.html)
 
+# Clojure and SQL 
+
+ClojureHomePage uses the SQLKorma DSL by default. korma.db is required as kdb and korma.core is required as kc
+
+1. [Korma Documentation](http://www.sqlkorma.com/)
+
+
+# Generating Table Views
+
+```bash
+$ lein gen user
+resources/generation-templates/routes/name.clj -> src/chp/routes/user.clj
+resources/generation-templates/chtml/new.chtml -> chp-root/user/new.chtml
+resources/generation-templates/chtml/edit.chtml -> chp-root/user/edit.chtml
+resources/generation-templates/chtml/view.chtml -> chp-root/user/view.chtml
+resources/generation-templates/chtml/list.chtml -> chp-root/user/list.chtml
+URL DATA BOUND TO => resources/bindings/user.clj 
+site.com/new/user 
+site.com/list/user 
+site.com/edit/user/:id 
+site.com/view/user/:id
+$ cat resources/bindings/user.clj
+```
+```clojure
+;; Example bindings for resources/schema/user.clj
+;; All values will be retrieved by the id column
+
+;; table must match the filename withut the clj extension
+;; user.clj -> user
+
+{:table :user
+
+;; List view value
+;; (chp.builder/binding-list :user 0 10)
+;; /chp/list/user
+
+ :list (list :name :id)
+
+;; View view values
+;; (chp.builder/binding->view :user 1)
+;; site.com/chp/view/user/:id
+
+ :view (list :name :password :admin)
+
+;; Edit view values
+;; (chp.builder/binding->edit :user 1)
+;; site.com/chp/edit/user/:id 
+;; site.com/chp/new/user
+
+;; edit is a hash-set with table columns
+;; as the key and the chp.html namespace
+;; function used to display the value.
+
+ :edit {:name #(text-field :name (escape %))
+        :password #(password-field :password (escape %))
+        :admin #(check-box :admin (Boolean/valueOf %))}
+
+;; enforce data type with fn to check and
+;; or convert before going into database.
+;; The function must take one arg.
+
+;; :name is limited to a string of 20 chars
+;; :password is limited to 100 chars
+;; :admin mut be a boolean value
+ :edit-enforce {:name #(->> % str seq (take 20) (apply str))
+                :password  #(->> % str seq (take 100) (apply str))
+                :admin #(Boolean/valueOf %)}}
+```
 
 # Builder Bindings
 
@@ -459,7 +488,7 @@ Connected to localhost.
 Escape character is '^]'.
 GET /chp/list/user
 
-
+```
 <h1>Viewing table of  user
 </h1>
 
@@ -470,6 +499,7 @@ GET /chp/list/user
 <br /><br /> <a href="/chp/list/user?offset=10">More</a>
 
 </div>
+```bash
 Connection closed by foreign host.
 
 
@@ -479,6 +509,7 @@ Trying ::1...
 Connected to localhost.
 Escape character is '^]'.
 GET /chp/view/user/1
+```
 <h1>Viewing  1
 </h1>
 
@@ -486,6 +517,7 @@ GET /chp/view/user/1
 [password badcleartext]
 [admin true]
 
+```bash
 Connection closed by foreign host.
 
 
@@ -495,6 +527,7 @@ Trying ::1...
 Connected to localhost.
 Escape character is '^]'.
 GET /chp/edit/user/1
+```
 
 <h1> Editing user #1 </h1>
 
@@ -503,129 +536,10 @@ GET /chp/edit/user/1
 <label for=":admin">admin</label><br /><input checked="checked" id="admin" name="admin" type="checkbox" value="true" /><br /><br /><label for=":password">password</label><br /><input id="password" name="password" type="password" value="badcleartext" /><br /><br /><label for=":name">name</label><br /><input id="name" name="name" type="text" value="user1" /><br /><br /> <input type="submit" value="save" />
 
 </form>
+```bash
 Connection closed by foreign host.
 ```
-
-# Generating Table Views
-
-```bash
-$ lein gen user
-resources/generation-templates/routes/name.clj -> src/chp/routes/user.clj
-resources/generation-templates/chtml/new.chtml -> chp-root/user/new.chtml
-resources/generation-templates/chtml/edit.chtml -> chp-root/user/edit.chtml
-resources/generation-templates/chtml/view.chtml -> chp-root/user/view.chtml
-resources/generation-templates/chtml/list.chtml -> chp-root/user/list.chtml
-URL DATA BOUND TO => resources/bindings/user.clj 
-site.com/new/user 
-site.com/list/user 
-site.com/edit/user/:id 
-site.com/view/user/:id
-$ cat resources/bindings/user.clj
-```
-```clojure
-;; Example bindings for resources/schema/user.clj
-;; All values will be retrieved by the id column
-
-;; table must match the filename withut the clj extension
-;; user.clj -> user
-
-{:table :user
-
-;; List view value
-;; (chp.builder/binding-list :user 0 10)
-;; /chp/list/user
-
- :list (list :name :id)
-
-;; View view values
-;; (chp.builder/binding->view :user 1)
-;; site.com/chp/view/user/:id
-
- :view (list :name :password :admin)
-
-;; Edit view values
-;; (chp.builder/binding->edit :user 1)
-;; site.com/chp/edit/user/:id 
-;; site.com/chp/new/user
-
-;; edit is a hash-set with table columns
-;; as the key and the chp.html namespace
-;; function used to display the value.
-
- :edit {:name #(text-field :name (escape %))
-        :password #(password-field :password (escape %))
-        :admin #(check-box :admin (Boolean/valueOf %))}
-
-;; enforce data type with fn to check and
-;; or convert before going into database.
-;; The function must take one arg.
-
-;; :name is limited to a string of 20 chars
-;; :password is limited to 100 chars
-;; :admin mut be a boolean value
- :edit-enforce {:name #(->> % str seq (take 20) (apply str))
-                :password  #(->> % str seq (take 100) (apply str))
-                :admin #(Boolean/valueOf %)}}
-```
-             
-# Clojure and SQL 
-
-ClojureHomePage uses the SQLKorma DSL by default. korma.db is required as kdb and korma.core is required as kc
-
-1. [Korma Documentation](http://www.sqlkorma.com/)
-
-# Session handling, Cookies, and Compojure
-
-Sessions are handled with the lib-noir.session namespace under the session alias.
-
-* [lib-noir session API](https://yogthos.github.io/lib-noir/noir.session.html)
-
-This session example can be accessed at site.com/session
-```clojure
-You have viewed this page 
-
-<clj>
-(let [k :view-count
-      inc-view (k (session/update-in! [k] inc))]
-  (print inc-view))
-</clj>
-
-time(s).
-```
-
-Because CHP is based on Compojure, you can use Compojure and Ring extensions. These middleware extensions should be added to the chp-routing function of the chp.core namespace. Below is what the function currently looks like.
-```clojure
-(defn chp-routing [& -chp-routes]
-  ;;; (-> (apply routes ...) middleware-wrap xyz-wrap)
-  (-> (apply routes
-             (reduce into [] -chp-routes))
-      wrap-noir-flash
-      wrap-noir-session))
-```
-
-Already included, but not loaded by default (except noir.session), the lib-noir library is a great helper library for Clojure web development.
-
-
-1. [lib-noir API](http://yogthos.github.io/lib-noir/index.html)
-2. [lib-noir Github](https://github.com/noir-clojure/lib-noir)
-3. [Ring CSRF protection](https://github.com/weavejester/ring-anti-forgery)
-4. [Ring Middleware Extensions](https://github.com/search?q=ring+middleware&ref=cmdform&type=Repositories)
-
-# Ring configuration
-
-The default configuration for CHP is located in project.clj
-
-```clojure
-:ring {:port 8000
-       :auto-reload? true
-       :auto-refresh? true
-       :reload-paths ["src/chp/"]
-       :handler chp.handler/app}
-```
-
-1. [Lein-ring documentation](https://github.com/weavejester/lein-ring)
-
-
+        
 # Enable Admin Account
 
 ```bash
@@ -728,6 +642,76 @@ Login Failed
 </html>
 ```
 
+# Clojure and HTML Generation
+
+The following methods presented in the documentation below are 
+accessible from within CHTML files by default. These abstractions
+are drop-in replacements for the Hiccup API located at http://weavejester.github.io/hiccup/.
+Please note that these forms DO NOT generate Hiccup code, but HTML.
+
+```clojure
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Form Fields
+
+(escape string)
+
+(url-encode string)
+
+(check-box attr-map? name)
+(check-box attr-map? name checked?)
+(check-box attr-map? name checked? value)
+
+(drop-down attr-map? name options)
+(drop-down attr-map? name options selected)
+
+(email-field attr-map? name)
+(email-field attr-map? name value)
+
+(file-upload attr-map? name)
+
+(form-to attr-map? [method action] & body)
+
+(hidden-field attr-map? name)
+(hidden-field attr-map? name value)
+
+(label attr-map? name text)
+
+(password-field attr-map? name)
+(password-field attr-map? name value)
+
+(radio-button attr-map? group)
+(radio-button attr-map? group checked?)
+(radio-button attr-map? group checked? value)
+
+(reset-button attr-map? text)
+
+(select-options attr-map? coll)
+(select-options attr-map? coll selected)
+
+(submit-button attr-map? text)
+
+(text-area attr-map? name)
+(text-area attr-map? name value)
+
+(text-field attr-map? name)
+(text-field attr-map? name value)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Common Elements
+
+(javascript-tag script)
+
+(image attr-map? src)
+(image attr-map? src alt)
+
+(link-to attr-map? url & content)
+
+(mail-to attr-map? e-mail & [content])
+
+(ordered-list attr-map? coll)
+
+(unordered-list attr-map? coll)
+
+```
+
 # Clojure and CSS Generation
 
 ClojureHomePage uses the Garden CSS generation library by default.
@@ -740,6 +724,27 @@ CHP uses the directory resources/cljs/ as the default cljs source code directory
 
 1. [lein-cljsbuild Documentation](https://github.com/emezeske/lein-cljsbuild/)
 2. [ClojureScript Documentation](https://github.com/clojure/clojurescript)
+
+
+# Getting started
+
+1) Download & Run
+
+```bash
+git clone https://github.com/runexec/chp
+cd chp
+lein ring server
+```
+
+2) Edit the default app-routes template located at the bottom of src/chp/handler.clj
+
+# How?
+
+By default, the CHTML files are located in chp-root folder of the project folder.
+When a CHTML file is parsed, all public variables of the chp.handler namespace
+are accessible during the evaluation of the ```<clj></clj>``` tags. Use print
+ or println within the tags to have the results displayed.
+
 
 # Removing Example Files
 
