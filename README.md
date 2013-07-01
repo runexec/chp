@@ -151,7 +151,9 @@ You have viewed this page
 
 <clj>
 (let [k :view-count
-      inc-view (k (session/update-in! [k] inc))]
+      inc-view (if (nil? (session/get k))
+                 (k (session/put! k 1))
+                 (k (session/update-in! [k] inc)))]
   (print inc-view))
 </clj>
 
