@@ -90,8 +90,8 @@
   (testing "parsing chp file"
     (let [chtml "<clj>(print (str 123))</clj>"
           tmp-file (java.io.File/createTempFile "unit-test.chp" ".tmp")
-          tmp-file2 (clojure.java.io/file (chp-path "unit.test.chtml"))
           tmp-file-name "unit.test.chtml"
+          tmp-file2 (clojure.java.io/file (chp-path tmp-file-name))
           _ (.. tmp-file deleteOnExit)
           _ (.. tmp-file2 createNewFile)
           _ (.. tmp-file2 deleteOnExit)
@@ -116,3 +116,4 @@
 (deftest chtmls-fn-listing-root-dir?
   (testing "chtmls fn = (chp-dir root-path)"
     (is (= (chtmls) (chp-dir root-path)))))
+
