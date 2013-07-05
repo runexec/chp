@@ -27,5 +27,5 @@
   (testing "Salted password exist?"
     (is (= 128
            (count
-            (login-password"admin"))))))
+            (login-password "admin"))))))
 
