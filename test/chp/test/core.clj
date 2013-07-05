@@ -118,3 +118,8 @@
     (is (= (chtmls) (chp-dir root-path)))))
 
 
+(defchp chproute-test :data)
+
+(deftest defchp-working?
+  (testing "defchp binding test"
+    (is (= chproute-test (chp-routes :data)))))
