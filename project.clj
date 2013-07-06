@@ -24,6 +24,6 @@
             "chp-clean" ["run" "-m" "chp.clean/clean"]}
   :cljsbuild {:builds [{:source-paths ["resources/cljs"]
                         :compiler {:output-to "resources/public/js/main.js"
-                                   :optimizations :whitespace
+                                   :optimizations :advanced
                                    :pretty-print true}}]}
   :profiles {:dev {:dependencies [[ring-mock "0.1.3"]]}})
