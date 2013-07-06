@@ -22,4 +22,3 @@
     (is (= 128 (count secret)))
     (is (= secret (password salt clear-text)))))
 
-

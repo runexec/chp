@@ -124,4 +124,3 @@
     (try (first (kc/select table))
          true
          (catch Exception ex false))))
-    

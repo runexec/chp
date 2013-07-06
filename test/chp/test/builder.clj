@@ -1,12 +1,12 @@
 (ns chp.test.builder
   (:use [chp.db
          :only [*db*]]
-        chp.core
-        chp.html
-        chp.password
         [chp.login :exclude [korma-db]])
   (:require [clojure.test :refer :all]
             [chp.builder :refer :all]
+            [chp.core :refer :all]
+            [chp.html :refer :all]
+            [chp.password :refer :all]
             [korma.core
              :as kc]
             [korma.db
