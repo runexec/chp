@@ -7,11 +7,11 @@
 
 (deftest login-working?
   (testing "Login working?"
-    (is (true? (login? "admin" "admin")))))
+    (is (login? "admin" "admin"))))
 
 (deftest admin-working?
   (testing "Admin working?"
-    (is (true? (admin? "admin")))))
+    (is (admin? "admin"))))
 
 (deftest login-id-working?
   (testing "Login id?"
