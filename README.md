@@ -44,7 +44,7 @@ ClojureHomePage is a Clojure Web Framework that provides the following.
 * [SQL DB configuration and creation](#db-configuration-and-creation)
 * [SQL DB Migrations](#db-migrations)
 * [SQL Manipulation](#clojure-and-sql)
-* [Get column syntax example](#get-column-synax)
+* [Get column syntax example](#get-column-syntax-example)
 
 <b> General Information </b>
 
