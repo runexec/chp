@@ -34,6 +34,7 @@ ClojureHomePage is a Clojure Web Framework that provides the following.
 * [View bindings](#builder-bindings)
 * [View bindings Example](#builder-binding-views-example)
 * [Enable admin account](#enable-admin-account)
+* [Database and Bindings tutorial](#basic-bindings-example)
 * [HTML Generation](#clojure-and-html-generation)
 * [CSS Generation](#clojure-and-css-generation)
 * [JavaScript Generation](#clojure-and-javascript-generation)
@@ -53,6 +54,7 @@ ClojureHomePage is a Clojure Web Framework that provides the following.
 * [License](#license)
 * [How?](#how)
 * [Tutorial](https://github.com/runexec/chp/tree/master/tutorial/01)
+
 
 # Example CHTML & Routes
 
@@ -628,6 +630,82 @@ Login Failed
 </body>
 </html>
 ```
+
+# Basic bindings example
+
+```bash
+#####  get CHP
+
+   [user@machine ~]$ mkdir blog; cd blog/
+   [user@machine blog]$ git clone https://github.com/runexec/chp.git
+   Cloning into 'chp'...
+   remote: Counting objects: 456, done.
+   remote: Compressing objects: 100% (224/224), done.
+   remote: Total 456 (delta 208), reused 413 (delta 165)
+   Receiving objects: 100% (456/456), 144.89 KiB | 80.00 KiB/s, done.
+   Resolving deltas: 100% (208/208), done.
+   [user@machine blog]$ cd chp/; ls
+   chp-examples/  chp-root/  resources/  src/  test/  tutorial/  project.clj  README.md
+
+##### Remove extra directories
+
+   [user@machine chp]$ rm -rf chp-examples/ tutorial/
+
+##### Create Database configuration and db
+
+   [user@machine chp]$ cd resources/config/
+   [user@machine config]$ emacs -nw -q db.clj 
+   [user@machine config]$ psql example -c 'CREATE DATABASE "blog";'
+   CREATE DATABASE 
+
+##### Create tables 
+
+[user@machine config]$ cd ../schema/
+[user@machine schema]$ cat user.clj 
+(table :user
+       (integer :id :primary-key :auto-inc)
+       (varchar :name 20)
+       (varchar :password 128)
+       (varchar :salt 128)
+       (boolean :admin)
+       (unique [:name]))
+[user@machine schema]$ emacs -nw news.clj 
+[user@machine schema]$ cat news.clj 
+(table :news
+       (integer :id :primary-key :auto-inc)
+       (integer :userid)
+       (varchar :title 100)
+       (text :body)
+       (unique [:title]))
+[user@machine schema]$ lein schema
+Creating Table =>  resources/schema/user.clj
+OKAY
+Creating Table =>  resources/schema/news.clj
+OKAY
+
+##### Create binding
+
+[user@machine bindings]$ emacs -nw news.clj
+[user@machine bindings]$ cat news.clj 
+{:table :news
+ :list (list :title :id)
+ :view (list :title :body)
+ :edit {:title #(text-field :title (escape %))
+        :body #(text-area :body (escape %))}
+ :edit-enforce {:title #(->> % str seq (take 100) (apply str))
+                :body str}}
+[user@machine bindings]$ lein ring server
+Jul 06, 2013 9:29:46 PM com.mchange.v2.log.MLog <clinit>
+INFO: MLog clients using java 1.4+ standard logging.
+2013-07-06 21:29:47.735:INFO:oejs.Server:jetty-7.6.1.v20120215
+2013-07-06 21:29:48.834:INFO:oejs.AbstractConnector:Started SelectChannelConnector@0.0.0.0:8000
+Started server on port 8000
+
+##### Create new blog post
+
+[user@machine bindings]$ firefox http://localhost:8000/chp/new/news
+```
+
 
 # Clojure and HTML Generation
 
