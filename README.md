@@ -47,7 +47,8 @@ ClojureHomePage is a Clojure Web Framework that provides the following.
 <b> General Information </b>
 
 * [Install](#getting-started)
-* [UML] (#uml)
+* [UML Relationships](#uml)
+* [Unit Tests](/test/chp/test/)
 * [Removing example files](#removing-example-files)	
 * [License](#license)
 * [How?](#how)
