@@ -724,6 +724,11 @@ lein ring server
 
 2) Edit the default app-routes template located at the bottom of src/chp/handler.clj
 
+# UML
+
+Full image size at https://raw.github.com/runexec/chp/master/violet-uml-workings.png
+![uml diagram](violet-uml-workings.png)
+
 # How?
 
 By default, the CHTML files are located in chp-root folder of the project folder.
@@ -752,9 +757,6 @@ chp-root/  resources/  src/  target/  test/  project.clj
 $ ls resources/
 bindings/  cljs/  config/  generation-templates/  migrations/  public/  schema/
 ```
-# UML
-
-![uml diagram](violet-uml-workings.png)
 
 # License
 
