@@ -1,6 +1,14 @@
 (ns chp.test.core
   (:require [clojure.test :refer :all]
-            [chp.core :refer :all]))
+            [chp.core :refer :all]
+            [korma.db
+             :as kdb]
+            [korma.core
+             :as kc]))
+
+
+;; This test is assuming the database migration has been applied
+;; from the file resources/migrations/01-add-admin.clj
 
 (deftest correct-paths?
   (testing "Correct core paths"
@@ -48,6 +56,15 @@
     (testing "Global env macro"
       (let [-var (get (System/getProperties) "java.vm.name")]
         (is (= (env java.vm.name) -var)))))
+
+(deftest local-db?
+  (let [example-user (:id 
+                      (first
+                       (kc/select {:table "user"}
+                                  (kc/fields [:id]))))]
+    (testing "Local $db macro - change"
+      (is (= example-user
+             ($cljdb :user {:id example-user} ($db id)))))))
 
 (deftest chp-route?
   (testing "Returning chp-route fn"

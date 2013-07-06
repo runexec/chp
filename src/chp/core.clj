@@ -2,11 +2,20 @@
   (:use compojure.core
         [noir.session
          :only [wrap-noir-flash
-                wrap-noir-session]])
+                wrap-noir-session]]
+        [chp.db
+         :only [*db*]])
   (:require chp.server
             [compojure.handler :as handler]
             [clojure.string
-             :as string]))
+             :as string]
+            [korma.db
+             :as kdb]
+            [korma.core
+             :as kc]))
+
+
+(kdb/defdb korma-db *db*)
 
 (def root-path "chp-root/")
 (def template-path (str root-path "templates/"))
@@ -15,10 +24,13 @@
 (defn chp-template-path [fp] (str template-path fp))
 
 (def ^:dynamic *title* "CHP Page")
+
 (def ^:dynamic *page*
   {:method nil
    :params nil
    :uri nil})
+
+(def ^:dynamic *cljdb*)
 
 (defn global-params [] (:params *page*))
 (defn global-method [] (:method *page*))
@@ -45,10 +57,25 @@
   [param-name]
   `(get (global-params) ~(keyword param-name)))
 
+
+(defmacro $cljdb
+  [table-keyword where-amap & body]
+  `(binding [*cljdb* (first
+                      (kc/select {:table (name ~table-keyword)}
+                                 (kc/where ~where-amap)))]
+     ~@body))
+     
+
+(defmacro $db [attribute-name]
+  (let [an (keyword attribute-name)]
+    `(~an *cljdb*)))
+
 (defmacro env 
   "Returns an environment variable value"
   [key]
   `(System/getProperty (name '~key)))
+
+
 
 (defmacro chp-route
   [path & body]

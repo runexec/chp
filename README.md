@@ -44,6 +44,7 @@ ClojureHomePage is a Clojure Web Framework that provides the following.
 * [SQL DB configuration and creation](#db-configuration-and-creation)
 * [SQL DB Migrations](#db-migrations)
 * [SQL Manipulation](#clojure-and-sql)
+* [Get column syntax example](#get-column-synax)
 
 <b> General Information </b>
 
@@ -319,6 +320,25 @@ ClojureHomePage uses the SQLKorma DSL by default. korma.db is required as kdb an
 
 1. [Korma Documentation](http://www.sqlkorma.com/)
 
+
+# Get column syntax example
+
+The $cljdb macro binds a row and allows the $db macro to retrieve columns of the row.
+Example, ($cljdb table-keyword where-clause & code-body)
+
+Here's how to use these macros
+
+```clojure
+chp.test.core> ($cljdb :user {:id 2} 
+		       (format "%s id is %d"
+			       ($db name)
+			       ($db id)))
+
+"admin id is 2"
+
+chp.test.core> (kc/select {:table "user"} (kc/fields :name :id))
+[{:id 2, :name "admin"}]
+```
 
 # Generating Table Views
 
