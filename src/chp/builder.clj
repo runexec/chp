@@ -117,7 +117,10 @@
 
 
 (defn binding-exist? [table-name]
-  (let [table (kc/create-entity table-name)]
+  (let [table {:table
+               (if (keyword? table-name)
+                 (name table-name)
+                 (str table-name))}]
     (try (first (kc/select table))
          true
          (catch Exception ex false))))
