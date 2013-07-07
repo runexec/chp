@@ -1,6 +1,6 @@
 (ns chp.handler
   (:use compojure.core
-        chp.core
+        [chp.core :exclude [korma-db]]
         chp.html
         chp.template
         [chp.db

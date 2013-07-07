@@ -1,7 +1,7 @@
 (ns chp.builder
   (:use [chp.db
          :only [*db*]]
-        chp.core
+        [chp.core :exclude [korma-db]]
         chp.html
         chp.password
         [chp.login :exclude [korma-db]])
