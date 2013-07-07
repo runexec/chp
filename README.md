@@ -203,7 +203,7 @@ The default configuration for CHP is located in project.clj
 
 # Auto-loading Middleware
 
-Middleware is automatically loaded from '''resources/middleware/*.clj''' when the server starts.
+Middleware is automatically loaded from '''resources/middleware/*.clj''' when the server starts. The middleware is evaluated in the chp.core namespace with the load-middleware fn.
 
 ```bash
 $ cat resources/middleware/example.clj
