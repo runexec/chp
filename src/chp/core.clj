@@ -34,8 +34,8 @@
                       :let [fp (.. f getAbsolutePath)]
                       :when (.. fp (endsWith ".clj"))]
                   (format "(do (ns chp.core) %s )" (slurp fp)))]
-       (map #(-> % meta :name eval)
-            (map load-string cljs)))))
+         (map #(-> % meta :name eval)
+              (map load-string cljs)))))
 
 (def ^:dynamic *title* "CHP Page")
 
