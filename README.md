@@ -31,7 +31,7 @@ ClojureHomePage is a Clojure Web Framework that provides the following.
 * [Ring and port configuration](#ring-configuration)
 * [Auto-loading middleware](#auto-loading-middleware)
 
-<b> Code Generation </b>
+<b> Code Generation & Modules </b>
 
 * [Generating views from a table](#generating-table-views)
 * [View bindings](#builder-bindings)
@@ -41,6 +41,7 @@ ClojureHomePage is a Clojure Web Framework that provides the following.
 * [HTML Generation](#clojure-and-html-generation)
 * [CSS Generation](#clojure-and-css-generation)
 * [JavaScript Generation](#clojure-and-javascript-generation)
+* [CHP Modules](#modules)
 
 <b> SQL Configuration, Migrations, and Manipulation </b>
 
@@ -833,6 +834,27 @@ CHP uses the directory resources/cljs/ as the default cljs source code directory
 1. [lein-cljsbuild Documentation](https://github.com/emezeske/lein-cljsbuild/)
 2. [ClojureScript Documentation](https://github.com/clojure/clojurescript)
 
+
+# Modules 
+
+Modules are optional resources that are shipped with every release.
+
+```bash
+$ lein mod-enable middleware verbose-log example
+Copying resources/modules/middleware/verbose-log.clj -> resources/middleware/verbose-log.clj
+Copying resources/modules/middleware/example.clj -> resources/middleware/example.clj
+$ lein mod-disable middleware verbose-log
+Deleting resources/middleware/verbose-log.clj
+$ lein mod-list
+resources/modules
+resources/modules/migration
+resources/modules/cljs
+resources/modules/middleware
+resources/modules/middleware/example.clj
+resources/modules/middleware/verbose-log.clj
+resources/modules/schema
+resources/modules/binding
+```
 
 # Getting started
 

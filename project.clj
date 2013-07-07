@@ -22,7 +22,12 @@
             "migrate" ["run" "-m" "chp.migration/chp-migrate"]
             "rollback" ["run" "-m" "chp.migration/chp-rollback"]
             "gen" ["run" "-m" "chp.generator/builder->gen"]
-            "chp-clean" ["run" "-m" "chp.clean/clean"]}
+            ;; DANGER
+            "chp-clean" ["run" "-m" "chp.clean/clean"]
+            ;; MOD
+            "mod-list" ["run" "-m" "chp.module/mod-list"]
+            "mod-enable" ["run" "-m" "chp.module/mod-enable"]
+            "mod-disable" ["run" "-m" "chp.module/mod-disable"]}
   :cljsbuild {:builds [{:source-paths ["resources/cljs"]
                         :compiler {:output-to "resources/public/js/main.js"
                                    :optimizations :advanced
