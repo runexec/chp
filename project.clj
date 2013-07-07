@@ -15,7 +15,8 @@
          :auto-reload? true
          :auto-refresh? true
          :reload-paths ["src/chp/"
-                        "chp-root/"]
+                        "chp-root/"
+                        "resources/middleware"]
          :handler chp.handler/app}
   :aliases {"schema" ["run" "-m" "chp.schema/load-schemas"]
             "migrate" ["run" "-m" "chp.migration/chp-migrate"]

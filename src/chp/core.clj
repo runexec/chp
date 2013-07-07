@@ -19,9 +19,23 @@
 
 (def root-path "chp-root/")
 (def template-path (str root-path "templates/"))
+(def middleware-path "resources/middleware/")
 
 (defn chp-path [fp] (str root-path fp))
 (defn chp-template-path [fp] (str template-path fp))
+
+(defn load-middleware
+  ([] (load-middleware middleware-path))
+  ([path]
+     (let [fp-seq (-> middleware-path
+                      clojure.java.io/file
+                      file-seq)
+           cljs (for [f fp-seq
+                      :let [fp (.. f getAbsolutePath)]
+                      :when (.. fp (endsWith ".clj"))]
+                  (format "(do %s )" (slurp fp)))]
+       (map #(-> % meta :name eval)
+            (map load-string cljs)))))
 
 (def ^:dynamic *title* "CHP Page")
 
@@ -169,10 +183,16 @@
 
 (defn chp-routing [& -chp-routes]
   ;;; (-> (apply routes ...) middleware-wrap xyz-wrap)
-  (-> (apply routes
-             (reduce into [] -chp-routes))
-      wrap-noir-flash
-      wrap-noir-session))
+  (let [auto-middleware (fn [x] 
+                             (let [wrapped (atom x)]
+                               (doseq [m (load-middleware)]
+                                 (swap! wrapped m))
+                               @wrapped))]
+    (-> (apply routes
+               (reduce into [] -chp-routes))
+        wrap-noir-flash
+        wrap-noir-session
+        auto-middleware)))
 
 (defn chp-site [& defchp-routes]
   (handler/site

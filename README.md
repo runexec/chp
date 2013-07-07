@@ -25,8 +25,11 @@ ClojureHomePage is a Clojure Web Framework that provides the following.
 
 * [CHTML & Routes](#example-chtml--routes)
 * [Session handling, Cookies, and Compojure](#session-handling-cookies-and-compojure)
-* [Ring and port configuration](#ring-configuration)
 
+<b> Ring </b>
+
+* [Ring and port configuration](#ring-configuration)
+* [Auto-loading middleware](#auto-loading-middleware)
 
 <b> Code Generation </b>
 
@@ -197,6 +200,26 @@ The default configuration for CHP is located in project.clj
 
 1. [Lein-ring documentation](https://github.com/weavejester/lein-ring)
 
+
+# Auto-loading Middleware
+
+Middleware is automatically loaded from '''resources/middleware/*.clj''' when the server starts.
+
+```bash
+$ cat resources/middleware/example.clj
+```
+```clojure
+;; This file is automatically loaded as middleware
+;; and should only contain one function.
+
+(defn example-middleware [handler]
+  (fn [request]
+    (let [resp (handler request)
+          headers (:headers resp)]
+      (println "resources/middleware/example.clj says "
+               "- Incoming request >> " headers)
+      resp)))
+```
 
 # DB Configuration and Creation
 
