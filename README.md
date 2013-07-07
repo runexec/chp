@@ -841,11 +841,16 @@ Modules are optional resources that are shipped with every release.
 
 ```bash
 $ lein mod-enable middleware verbose-log example
+
 Copying resources/modules/middleware/verbose-log.clj -> resources/middleware/verbose-log.clj
 Copying resources/modules/middleware/example.clj -> resources/middleware/example.clj
+
 $ lein mod-disable middleware verbose-log
+
 Deleting resources/middleware/verbose-log.clj
+
 $ lein mod-list
+
 resources/modules
 resources/modules/migration
 resources/modules/cljs
