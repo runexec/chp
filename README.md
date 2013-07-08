@@ -226,7 +226,7 @@ $ cat resources/middleware/example.clj
 
 A Korma SQL and Lobos compatible SQL connection configuration file is located at resources/config/db.clj
 
-The SQL database tables are located in resources/schema/. Each file represents a single table and these files get evaluated by the lein alias ```lein schema```.
+The SQL database tables are located in resources/schema/. These files can contain an unlimited amount of create calls and get evaluated by the lein alias ```lein schema```
 
 ```clojure
 $ lein schema
@@ -239,11 +239,18 @@ OKAY
 The Lobos library handles the table syntax. Below is the user table from user.clj.
 
 ```clojure
-(table :user
-       (integer :id :primary-key :auto-inc)
-       (varchar :name 20)
-       (varchar :password 100)
-       (unique [:name]))
+(create *db*
+        (table :user
+               (integer :id :primary-key :auto-inc)
+               (varchar :name 20)
+               (varchar :password 100)
+               (unique [:name])))
+(create *db*
+        (table :some_other_table
+               (integer :id :primary-key :auto-inc)
+               (varchar :name 20)
+               (varchar :password 100)
+               (unique [:name])))
 ```
 
 *Do not wrap your tables with the create macro.*
@@ -489,12 +496,13 @@ $ cd chp
 $ cat resources/schema/user.clj 
 ```
 ```clojure
-(table :user
-       (integer :id :primary-key :auto-inc)
-       (varchar :name 20)
-       (varchar :password 100)
-       (boolean :admin)
-       (unique [:name]))
+(create *db*
+        (table :user
+               (integer :id :primary-key :auto-inc)
+               (varchar :name 20)
+               (varchar :password 100)
+               (boolean :admin)
+               (unique [:name])))
 ```
 ```bash
 $ lein schema
@@ -591,13 +599,14 @@ chp-examples/  chp-root/  resources/  src/  test/  tutorial/  project.clj  READM
 [user@machine chp]$ cat resources/schema/user.clj 
 ```
 ```clojure
-(table :user
-       (integer :id :primary-key :auto-inc)
-       (varchar :name 20)
-       (varchar :password 128)
-       (varchar :salt 128)
-       (boolean :admin)
-       (unique [:name]))
+(create *db*
+        (table :user
+               (integer :id :primary-key :auto-inc)
+               (varchar :name 20)
+               (varchar :password 128)
+               (varchar :salt 128)
+               (boolean :admin)
+               (unique [:name])))
 ```
 ```bash
 [user@machine chp]$ lein schema
@@ -706,13 +715,14 @@ Login Failed
 
 [user@machine config]$ cd ../schema/
 [user@machine schema]$ cat user.clj 
-(table :user
-       (integer :id :primary-key :auto-inc)
-       (varchar :name 20)
-       (varchar :password 128)
-       (varchar :salt 128)
-       (boolean :admin)
-       (unique [:name]))
+(create *db*
+        (table :user
+               (integer :id :primary-key :auto-inc)
+               (varchar :name 20)
+               (varchar :password 128)
+               (varchar :salt 128)
+               (boolean :admin)
+               (unique [:name])))
 [user@machine schema]$ emacs -nw news.clj 
 [user@machine schema]$ cat news.clj 
 (table :news

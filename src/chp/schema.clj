@@ -23,10 +23,10 @@
 (defn- fp->schema 
   "File path to schema"
   [schema-src-path]
-  (-> schema-src-path
-      slurp
-      read-string
-      eval))
+  (->> schema-src-path
+       slurp
+       (format "(do %s)")
+      load-string))
 
 (defn load-schemas
   "Only supposed to be used in the CLI.
@@ -36,7 +36,7 @@
   (doseq [_ (schema-files)]
     (println "Creating Table => " _)
     (let [result (try
-                   (create *db* (fp->schema _))
+                   (fp->schema _)
                    true
                    (catch Exception e
                      (println e)
