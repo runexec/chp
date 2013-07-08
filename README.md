@@ -733,12 +733,13 @@ Login Failed
                (unique [:name])))
 [user@machine schema]$ emacs -nw news.clj 
 [user@machine schema]$ cat news.clj 
-(table :news
-       (integer :id :primary-key :auto-inc)
-       (integer :userid)
-       (varchar :title 100)
-       (text :body)
-       (unique [:title]))
+(create *db*
+        (table :news
+               (integer :id :primary-key :auto-inc)
+               (integer :userid)
+               (varchar :title 100)
+               (text :body)
+               (unique [:title])))
 [user@machine schema]$ lein schema
 Creating Table =>  resources/schema/user.clj
 OKAY
