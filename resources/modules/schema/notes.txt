@@ -1,0 +1,2 @@
+user.clj : the default chp login schema
+blog-post.clj : a model ported from the mezzanine django cms
