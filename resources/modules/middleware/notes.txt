@@ -1,0 +1,3 @@
+text-mime-only : if not a text related content-type, 403 error.
+verbose-log : log request to server console
+operating-status : every request will print system usage to console
