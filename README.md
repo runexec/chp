@@ -170,13 +170,20 @@ time(s).
 ```
 
 Because CHP is based on Compojure, you can use Compojure and Ring extensions. These middleware extensions should be added to the chp-routing function of the chp.core namespace. Below is what the function currently looks like.
+
 ```clojure
 (defn chp-routing [& -chp-routes]
   ;;; (-> (apply routes ...) middleware-wrap xyz-wrap)
-  (-> (apply routes
-             (reduce into [] -chp-routes))
-      wrap-noir-flash
-      wrap-noir-session))
+  (let [auto-middleware (fn [x] 
+                             (let [wrapped (atom x)]
+                               (doseq [m (load-middleware)]
+                                 (swap! wrapped m))
+                               @wrapped))]
+    (-> (apply routes
+               (reduce into [] -chp-routes))
+        wrap-noir-flash
+        wrap-noir-session
+        auto-middleware)))
 ```
 
 Already included, but not loaded by default (except noir.session), the lib-noir library is a great helper library for Clojure web development.
@@ -195,7 +202,10 @@ The default configuration for CHP is located in project.clj
 :ring {:port 8000
        :auto-reload? true
        :auto-refresh? true
-       :reload-paths ["src/chp/"]
+       :reload-paths ["src/chp/"
+                      "chp-root/"
+                      "resources/middleware/"
+                      "resources/public/"]
        :handler chp.handler/app}
 ```
 
@@ -204,7 +214,7 @@ The default configuration for CHP is located in project.clj
 
 # Auto-loading Middleware
 
-Middleware is automatically loaded from '''resources/middleware/*.clj''' when the server starts. The middleware is evaluated in the chp.core namespace with the load-middleware fn.
+Middleware is automatically loaded from '''resources/middleware/*.clj''' when the server starts. The middleware is evaluated in the chp.core namespace with the load-middleware fn. All middleware is reloaded when triggering the ring-autoload.
 
 ```bash
 $ cat resources/middleware/example.clj
@@ -252,8 +262,6 @@ The Lobos library handles the table syntax. Below is the user table from user.cl
                (varchar :password 100)
                (unique [:name])))
 ```
-
-*Do not wrap your tables with the create macro.*
 
 1. [Lobos Project & Documentation](https://github.com/budu/lobos)
 2. [More Lobos Documentation](http://budu.github.io/lobos/documentation.html)
@@ -863,11 +871,17 @@ $ lein mod-list
 
 resources/modules
 resources/modules/migration
+resources/modules/migration/01-add-admin.clj
 resources/modules/cljs
 resources/modules/middleware
 resources/modules/middleware/example.clj
+resources/modules/middleware/operating-status.clj
+resources/modules/middleware/text-mime-only.clj
 resources/modules/middleware/verbose-log.clj
 resources/modules/schema
+resources/modules/schema/example.clj
+resources/modules/schema/user.clj
+resources/modules/schema/blog-post.clj
 resources/modules/binding
 ```
 
@@ -886,6 +900,9 @@ lein ring server
 # UML
 
 Full image size at https://raw.github.com/runexec/chp/master/violet-uml-workings.png
+
+(2013-07-08 JST) NOTICE: This graph is not consistent with the latest update(s) and contains minor errors.
+
 ![uml diagram](violet-uml-workings.png)
 
 # How?
