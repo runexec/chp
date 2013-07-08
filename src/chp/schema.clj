@@ -25,8 +25,10 @@
   [schema-src-path]
   (->> schema-src-path
        slurp
+       (format "(use '[lobos.core :only [create]] '[chp.db :only [*db*]]) %s")
        (format "(do %s)")
-      load-string))
+      read-string
+      eval))
 
 (defn load-schemas
   "Only supposed to be used in the CLI.
