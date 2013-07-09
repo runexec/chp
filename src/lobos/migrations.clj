@@ -11,12 +11,16 @@
                schema
                helpers
                connectivity)
-        chp.core
-        chp.login
+        [chp.core
+         :exclude [korma-db]]
+        [chp.login
+         :exclude [korma-db]]
         chp.password
         [chp.db 
          :only [*db*]]
         [chp.migration 
          :only [load-migrations]]))
+
+(kdb/defdb korma-db *db*)
 
 (eval (load-migrations))

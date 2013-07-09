@@ -4,7 +4,7 @@
 (def mod-path "resources/modules/")
 
 (defn- mpath-copy
-  "types: :middleware :migration :schema :cljs :binding
+  "types: :middleware :migrations :schema :cljs :binding
    file: is a :name without the .clj extension"
   [-type -file & [enable?]]
   (let [-type (if (keyword? -type) (name -type) (str -type))

@@ -28,7 +28,8 @@
             ;; MOD
             "mod-list" ["run" "-m" "chp.module/mod-list"]
             "mod-enable" ["run" "-m" "chp.module/mod-enable"]
-            "mod-disable" ["run" "-m" "chp.module/mod-disable"]}
+            "mod-disable" ["run" "-m" "chp.module/mod-disable"]
+            "package-run" ["run" "-m" "chp.package/load-packages"]}
   :cljsbuild {:builds [{:source-paths ["resources/cljs"]
                         :compiler {:output-to "resources/public/js/main.js"
                                    :optimizations :advanced

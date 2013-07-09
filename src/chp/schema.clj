@@ -20,7 +20,7 @@
        (filter #(.. % (endsWith ".clj")))
        (map #(str schema-dir %))))
 
-(defn- fp->schema 
+(defn fp->schema 
   "File path to schema"
   [schema-src-path]
   (->> schema-src-path

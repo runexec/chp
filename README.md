@@ -42,6 +42,7 @@ ClojureHomePage is a Clojure Web Framework that provides the following.
 * [CSS Generation](#clojure-and-css-generation)
 * [JavaScript Generation](#clojure-and-javascript-generation)
 * [CHP Modules](#modules)
+* [Module Packages](#module-packages)
 
 <b> SQL Configuration, Migrations, and Manipulation </b>
 
@@ -871,8 +872,8 @@ Deleting resources/middleware/verbose-log.clj
 $ lein mod-list
 
 resources/modules
-resources/modules/migration
-resources/modules/migration/01-add-admin.clj
+resources/modules/migrations
+resources/modules/migrations/01-add-admin.clj
 resources/modules/cljs
 resources/modules/middleware
 resources/modules/middleware/example.clj
@@ -883,7 +884,48 @@ resources/modules/schema
 resources/modules/schema/example.clj
 resources/modules/schema/user.clj
 resources/modules/schema/blog-post.clj
-resources/modules/binding
+resources/modules/bindings
+resources/modules/bindings/user.clj
+```
+
+# Module Packages
+
+Module packages are stored in ```resources/packages/```. Each package is a clj file that describes what modules to install when calling ```lein package-run name1 name2 etc...```
+
+```bash
+$ cat resources/packages/admin.clj
+```
+```clojure
+;; CHP Admin module
+;; {:module-type [:module :module :module etc..]}
+
+{:schema [:user] ;; resources/modules/schema/user.clj
+ :migrations [:01-add-admin] ;; resources/modules/migrations/01-add-admin.clj
+ :bindings [:user] ;; resources/modules/bindings/user.clj
+ :middleware [] ;; resources/modules/middleware/ -- nothing
+ :cljs []} ;; resources/modules/cljs/ -- nothing
+```
+
+```bash
+$ lein package-run admin
+
+ Loading for :schema
+Copying resources/modules/schema/user.clj -> resources/schema/user.clj
+Creating Table =>  resources/schema/user.clj
+OKAY
+
+ Loading for :migrations
+Copying resources/modules/migrations/01-add-admin.clj -> resources/migrations/01-add-admin.clj
+Jul 09, 2013 7:52:37 PM com.mchange.v2.log.MLog <clinit>
+INFO: MLog clients using java 1.4+ standard logging.
+create-chp-admin
+
+ Loading for :bindings
+Copying resources/modules/bindings/user.clj -> resources/bindings/user.clj
+
+ Loading for :middleware
+
+ Loading for :cljs
 ```
 
 # Getting started
