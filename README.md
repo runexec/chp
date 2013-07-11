@@ -31,7 +31,7 @@ ClojureHomePage is a Clojure Web Framework that provides the following.
 * [Ring and port configuration](#ring-configuration)
 * [Auto-loading middleware](#auto-loading-middleware)
 
-<b> Code Generation & Modules </b>
+<b> Code Generation, Modules, and JSON API </b>
 
 * [Generating views from a table](#generating-table-views)
 * [View bindings](#builder-bindings)
@@ -43,6 +43,7 @@ ClojureHomePage is a Clojure Web Framework that provides the following.
 * [JavaScript Generation](#clojure-and-javascript-generation)
 * [CHP Modules](#modules)
 * [Module Packages](#module-packages)
+* [JSON API](#json-api)
 
 <b> SQL Configuration, Migrations, and Manipulation </b>
 
@@ -926,6 +927,69 @@ Copying resources/modules/bindings/user.clj -> resources/bindings/user.clj
  Loading for :middleware
 
  Loading for :cljs
+```
+
+# JSON API
+
+To enable the JSON read-only API, create an API config file in resources/api/. Once this configuration file is made, you can access JSON values @ site.com/chp/api/{table-name}
+
+GET params can be used to locate specific values. If the params aren't listed in the configuration, the extra params are ignored.
+
+```bash
+$ cat resources/api/user.clj
+```
+```clojure
+
+;; API settings for the User table
+;; the filename must be the same as the table name
+;; {:table :user} => user.clj
+
+{:table :user
+ :return [:id :name]
+
+ ;; The where key holds a map that describes 
+ ;; columns that can be used to locate the 
+ ;; data.
+
+ ;; Each column key needs to have a function
+ ;; as the value that accepts one arg. This
+ ;; function needs to convert the arg to the
+ ;; proper data type.
+
+ ;; The single arg is a string from the uri
+
+ :where {:id #(Integer. %)
+         :name str
+         :admin #(Boolean. %)}}
+```
+```bash
+$ curl http://localhost:8000/chp/api/user; echo " << done"
+
+{"data": [{
+  "name" : "admin",
+  "id" : 1
+},{
+  "name" : "example",
+  "id" : 3
+}]} << done
+
+$ curl http://localhost:8000/chp/api/user?id=3; echo " << done"
+
+{"data": [{
+  "name" : "example",
+  "id" : 3
+}]} << done
+
+$ curl http://localhost:8000/chp/api/user?name=admin; echo " << done"
+
+{"data": [{
+  "name" : "admin",
+  "id" : 1
+}]} << done
+
+$ curl http://localhost:8000/chp/api/userasdasd; echo " << done"
+
+An error occured << done
 ```
 
 # Getting started

@@ -1,11 +1,34 @@
 (ns chp.routes.chp
   (:use chp.core
+        [cheshire.core
+         :only [generate-string]]
+        [chp.api
+         :only [api->where]]
         [chp.builder
          :only [binding-exist?]]))
 
 (defn display? [] (binding-exist? ($p table)))
 
 (defchp chp-builder-paths
+  (chp-route "/chp/api/:table"
+             (try
+               (let [table ($p table)
+                     return (api->where (keyword table) ($ params))]
+                 (if-not (seq return)
+                   "{}"
+                    (let [return (mapv #(generate-string % {:pretty true})
+                                       return)
+                          rc (count return)]
+                      (format "{\"data\": [%s]}"
+                              (apply str
+                                     (if (<= rc 1)
+                                       return
+                                       (drop-last
+                                        (interleave return 
+                                                    (repeat rc ",")))))))))
+               (catch Exception e
+                 (println e "=>" (.. e getMessage))
+                 "An error occured")))
   (chp-route "/chp/login"
              (or (chp-when :get (root-parse "chp/login.chtml"))
                  (chp-when :post (root-parse "chp/login-session.chtml"))

@@ -41,6 +41,7 @@
         :bindings true
         :middleware true
         :cljs true
+        :api true
         :unknown-type))))
       
 (defn load-packages [& -name]

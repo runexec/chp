@@ -1,8 +1,11 @@
 (ns chp.handler
   (:use compojure.core
-        [chp.core :exclude [korma-db]]
         chp.html
         chp.template
+        [chp.core
+         :exclude [korma-db]]
+        [chp.api
+         :only [api->where]]
         [chp.db
          :only [*db*]]
         [garden.core
