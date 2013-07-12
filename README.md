@@ -1000,7 +1000,37 @@ An error occured << done
 
 After creating an API config file in ```resources/api/```, you can view the dynamically generated API documentation at ```site.com/chp/api```.
 
-Here's what the documentation looks like for all config files in ```resources/api/```
+Before showing the documentation page, here's what the default user API config looks like.
+
+```bash
+$ cat resources/api/user.clj
+```
+```clojure
+
+;; API settings for the User table
+;; the filename must be the same as the table name
+;; {:table :user} => user.clj
+
+{:table :user
+ :return [:id :name]
+
+ ;; The where key holds a map that describes 
+ ;; columns that can be used to locate the 
+ ;; data.
+
+ ;; Each column key needs to have a function
+ ;; as the value that accepts one arg. This
+ ;; function needs to convert the arg to the
+ ;; proper data type.
+
+ ;; The single arg is a string from the uri
+
+ :where {:id #(Integer. %)
+         :name str
+         :admin #(Boolean. %)}}
+```
+
+And here's what the documentation looks like for all config files in ```resources/api/```
 
 ```bash 
 $ curl localhost:8000/chp/api
