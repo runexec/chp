@@ -19,7 +19,7 @@
     (println
      "<h1 style=\"background:#FFFAAA\">" -name "</h1>"
      "Data Link:"  (link-to (str base -name) -name)
-     "<div style=\"background:#FFFCCC\">"
+     "<div style=\"background:#FFFCDD\">"
      (format (str "<table>%s<tr>"
                   "<td style=\"padding-left:15px;\">%s</td>"
                   "<td>%s</td>"

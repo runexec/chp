@@ -992,6 +992,56 @@ $ curl http://localhost:8000/chp/api/userasdasd; echo " << done"
 An error occured << done
 ```
 
+# JSON API Documentation Page
+
+After creating an API config file in ```resources/api/```, you can view the dynamically generated API documentation at ```site.com/chp/api```.
+
+Before showing the documentation page, here's what the default user API config looks like.
+
+```bash
+$ cat resources/api/user.clj
+```
+```clojure
+
+;; API settings for the User table
+;; the filename must be the same as the table name
+;; {:table :user} => user.clj
+
+{:table :user
+ :return [:id :name]
+
+ ;; The where key holds a map that describes 
+ ;; columns that can be used to locate the 
+ ;; data.
+
+ ;; Each column key needs to have a function
+ ;; as the value that accepts one arg. This
+ ;; function needs to convert the arg to the
+ ;; proper data type.
+
+ ;; The single arg is a string from the uri
+
+ :where {:id #(Integer. %)
+         :name str
+         :admin #(Boolean. %)}}
+```
+
+And here's what the documentation looks like for all config files in ```resources/api/```
+
+```bash 
+$ curl localhost:8000/chp/api
+```
+
+<h1>Available API</h1>
+
+<h1 style="background:#FFFAAA"> user </h1> Data Link: <a href="/chp/api/user">user</a> <div style="background:#FFFCDD"> <table><tr><td style="padding:10px;"><h4>Data Returned</h4></td><td><h4>Optional Where Params</h4></td></tr><tr><td style="padding-left:15px;">id <br />
+name <br />
+</td><td>id <br />
+name <br />
+admin <br />
+</td></tr></table> </div>
+
+
 # Getting started
 
 1) Download & Run
