@@ -10,6 +10,7 @@
 (defn display? [] (binding-exist? ($p table)))
 
 (defchp chp-builder-paths
+  (chp-route "/chp/api" (root-parse "chp/api.chtml"))
   (chp-route  ["/chp/api/:table" :table  #"[a-zA-Z0-9-_]*"]
              (try
                (let [table ($p table)

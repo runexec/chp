@@ -5,7 +5,8 @@
         [chp.core
          :exclude [korma-db]]
         [chp.api
-         :only [api->where]]
+         :only [api->where
+                api-dir]]
         [chp.db
          :only [*db*]]
         [garden.core

@@ -1,0 +1,33 @@
+<h1 style="text-align:center;">Available API</h1>
+
+<clj>
+(let [base "/chp/api/"
+      location "resources/api/"]
+  (doseq [_ (-> location clojure.java.io/file file-seq)
+          :let [-name (.. _ getName)]
+          :when (.. -name (endsWith ".clj"))
+          :let [file-path (str api-dir -name)
+                data (-> file-path slurp load-string)
+                return (:return data)
+                where (-> data :where keys)
+                -name (take-while #(not= % \.) -name)
+                -name (apply str -name)
+                header (format "<tr><td style=\"padding:10px;\">%s</td><td>%s</td></tr>"
+                               "<h4>Data Returned</h4>"
+                               "<h4>Optional Where Params</h4>")]]
+
+    (println
+     "<h1 style=\"background:#FFFAAA\">" -name "</h1>"
+     "Data Link:"  (link-to (str base -name) -name)
+     (format (str "<table>%s<tr>"
+                  "<td style=\"padding-left:15px;\">%s</td>"
+                  "<td>%s</td>"
+                  "</tr></table>")
+             header
+             (with-out-str
+               (doseq [_ return :let [column (name _)]]
+                 (println column "<br />")))
+             (with-out-str
+               (doseq [_ where :let [column (name _)]]
+                 (println column "<br />")))))))
+</clj>
