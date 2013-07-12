@@ -44,6 +44,7 @@ ClojureHomePage is a Clojure Web Framework that provides the following.
 * [CHP Modules](#modules)
 * [Module Packages](#module-packages)
 * [JSON API](#json-api)
+* [Auto Documenting API](#json-api-documentation-page)
 
 <b> SQL Configuration, Migrations, and Manipulation </b>
 
