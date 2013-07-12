@@ -1,4 +1,4 @@
-<h1 style="text-align:center;">Available API</h1>
+<h1>Available API</h1>
 
 <clj>
 (let [base "/chp/api/"
@@ -19,6 +19,7 @@
     (println
      "<h1 style=\"background:#FFFAAA\">" -name "</h1>"
      "Data Link:"  (link-to (str base -name) -name)
+     "<div style=\"background:#FFFCCC\">"
      (format (str "<table>%s<tr>"
                   "<td style=\"padding-left:15px;\">%s</td>"
                   "<td>%s</td>"
@@ -29,5 +30,6 @@
                  (println column "<br />")))
              (with-out-str
                (doseq [_ where :let [column (name _)]]
-                 (println column "<br />")))))))
+                 (println column "<br />"))))
+     "</div>")))
 </clj>
