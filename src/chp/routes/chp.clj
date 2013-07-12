@@ -10,7 +10,7 @@
 (defn display? [] (binding-exist? ($p table)))
 
 (defchp chp-builder-paths
-  (chp-route "/chp/api/:table"
+  (chp-route  ["/chp/api/:table" :table  #"[a-zA-Z0-9-_]*"]
              (try
                (let [table ($p table)
                      return (api->where (keyword table) ($ params))]
@@ -38,22 +38,22 @@
 ;; turn the :table->:keyword to resources/bindings/keyword.clj. Removing the 
 ;; regex restraints can be potentially dangerous.
 
-  (chp-route ["/chp/list/:table" :table  #"[a-zA-Z0-9-_.]*"]
+  (chp-route ["/chp/list/:table" :table  #"[a-zA-Z0-9-_]*"]
              (if (display?)
                (root-parse "chp/list.chtml")
                "Not Found"))
-  (chp-route ["/chp/new/:table" :table  #"[a-zA-Z0-9-_.]*"]
+  (chp-route ["/chp/new/:table" :table  #"[a-zA-Z0-9-_]*"]
              (if (display?)
                (root-parse "chp/new.chtml")
                "Not Found"))
   (chp-route ["/chp/edit/:table/:id"
-              :table  #"[a-zA-Z0-9-_.]*"
+              :table  #"[a-zA-Z0-9-_]*"
               :id #"\d+"]
               (if (display?)
                 (root-parse "chp/edit.chtml")
                 "Not Found"))
   (chp-route ["/chp/view/:table/:id"
-              :table  #"[a-zA-Z0-9-_.]*"
+              :table  #"[a-zA-Z0-9-_]*"
               :id #"\d+"]
              (if (display?)
                (root-parse "chp/view.chtml")
