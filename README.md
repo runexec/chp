@@ -513,6 +513,17 @@ Creating Table =>  resources/schema/example.clj
 OKAY
 Creating Table =>  resources/schema/user.clj
 OKAY
+$ lein gen user
+resources/generation-templates/routes/name.clj -> src/chp/routes/user.clj
+resources/generation-templates/chtml/new.chtml -> chp-root/user/new.chtml
+resources/generation-templates/chtml/edit.chtml -> chp-root/user/edit.chtml
+resources/generation-templates/chtml/view.chtml -> chp-root/user/view.chtml
+resources/generation-templates/chtml/list.chtml -> chp-root/user/list.chtml
+URL DATA BOUND TO => resources/bindings/user.clj 
+site.com/new/user 
+site.com/list/user 
+site.com/edit/user/:id 
+site.com/view/user/:id
 $ psql example
 psql (9.2.4)
 Type "help" for help.
