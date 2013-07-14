@@ -767,7 +767,7 @@ OKAY
 ##### Create Views 
 
 
-[usermachine bindings]$ lein gen news
+[user@machine bindings]$ lein gen news
  Jul 14, 2013 9:59:55 AM com.mchange.v2.log.MLog <clinit>
 INFO: MLog clients using java 1.4+ standard logging.
  resources/generation-templates/routes/name.clj -> src/chp/routes/news.clj
