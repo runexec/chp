@@ -7,8 +7,6 @@
         [chp.builder
          :only [binding-exist?]]))
 
-(defn display? [] (binding-exist? ($p table)))
-
 (defchp chp-builder-paths
   (chp-route "/chp/api" (root-parse "chp/api.chtml"))
   (chp-route  ["/chp/api/:table" :table  #"[a-zA-Z0-9-_]*"]
@@ -33,7 +31,16 @@
   (chp-route "/chp/login"
              (or (chp-when :get (root-parse "chp/login.chtml"))
                  (chp-when :post (root-parse "chp/login-session.chtml"))
-                 "Not Found"))
+                 "Not Found")))
+
+(defn display? [] (binding-exist? ($p table)))
+
+(comment 
+
+Disabled by default and could be dangerous on a live site
+Add this body to the routes for quick testing, but use the
+view generator just to be safe.
+      
 
 ;; :table gets passed to functions in chp.builder, and these functions
 ;; turn the :table->:keyword to resources/bindings/keyword.clj. Removing the 

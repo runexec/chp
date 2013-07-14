@@ -449,15 +449,6 @@ $ cat resources/bindings/user.clj
 
 The example user.clj bindings below will be used to make the new, list, view, and edit pages of the user table in schema/user.clj.
 
-Th below bindings will produce the following urls.
-
-```
-site.com/chp/list/user
-site.com/chp/new/user
-site.com/chp/view/user/1
-site.com/chp/edit/user/1
-```
-
 ```clojure
 ;; Example bindings for resources/schema/user.clj
 ;; All values will be retrieved by the id column
@@ -540,7 +531,7 @@ $ telnet localhost 8000
 Trying ::1...
 Connected to localhost.
 Escape character is '^]'.
-GET /chp/list/user
+GET /list/user
 
 ```
 <h1>Viewing table of  user
@@ -548,9 +539,9 @@ GET /chp/list/user
 
 <div style="background:yellow;">
   <table><thead><tr><th>Action</th><th><b>id</b></th><th><b>name</b></th></tr></thead>
-<tr><td><a href="/chp/view/user/1">view</a> <a href="/chp/edit/user/1">edit</a></td><td>1</td><td>user1</td></tr>
+<tr><td><a href="/view/user/1">view</a> <a href="/edit/user/1">edit</a></td><td>1</td><td>user1</td></tr>
 </table>
-<br /><br /> <a href="/chp/list/user?offset=10">More</a>
+<br /><br /> <a href="/list/user?offset=10">More</a>
 
 </div>
 ```bash
@@ -562,7 +553,7 @@ $ telnet localhost 8000
 Trying ::1...
 Connected to localhost.
 Escape character is '^]'.
-GET /chp/view/user/1
+GET /view/user/1
 ```
 <h1>Viewing  1
 </h1>
@@ -580,11 +571,11 @@ $ telnet localhost 8000
 Trying ::1...
 Connected to localhost.
 Escape character is '^]'.
-GET /chp/edit/user/1
+GET /edit/user/1
 
 <h1> Editing user #1 </h1>
 
-<form action="/chp/edit/user/1
+<form action="/edit/user/1
 " method="POST">
 <label for=":admin">admin</label><br /><input checked="checked" id="admin" name="admin" type="checkbox" value="true" /><br /><br /><label for=":password">password</label><br /><input id="password" name="password" type="password" value="badcleartext" /><br /><br /><label for=":name">name</label><br /><input id="name" name="name" type="text" value="user1" /><br /><br /> <input type="submit" value="save" />
 
@@ -761,6 +752,38 @@ OKAY
         :body #(text-area :body (escape %))}
  :edit-enforce {:title #(->> % str seq (take 100) (apply str))
                 :body str}}
+
+##### Create Views 
+
+
+[news@machine bindings]$ lein gen news
+ Jul 14, 2013 9:59:55 AM com.mchange.v2.log.MLog <clinit>
+INFO: MLog clients using java 1.4+ standard logging.
+ resources/generation-templates/routes/name.clj -> src/chp/routes/news.clj
+resources/generation-templates/chtml/new.chtml -> chp-root/news/new.chtml
+resources/generation-templates/chtml/edit.chtml -> chp-root/news/edit.chtml
+resources/generation-templates/chtml/view.chtml -> chp-root/news/view.chtml
+resources/generation-templates/chtml/list.chtml -> chp-root/news/list.chtml
+URL DATA BOUND TO => resources/bindings/news.clj 
+site.com/new/news 
+site.com/list/news 
+site.com/edit/news/:id 
+site.com/view/news/:id
+
+##### Add Routes to chp/src/chp/handler.clj
+```bash
+```clojure
+(:require [chp.routes.news :refer [news-table-routes]])
+
+(def app
+  (chp-site news-table-routes
+            example-routes
+            user-table-routes
+            chp-builder-paths
+            app-routes))
+
+```
+```bash
 [user@machine bindings]$ lein ring server
 Jul 06, 2013 9:29:46 PM com.mchange.v2.log.MLog <clinit>
 INFO: MLog clients using java 1.4+ standard logging.
@@ -770,7 +793,7 @@ Started server on port 8000
 
 ##### Create new blog post
 
-[user@machine bindings]$ firefox http://localhost:8000/chp/new/news
+[user@machine bindings]$ firefox http://localhost:8000/new/news
 ```
 
 
