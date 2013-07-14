@@ -782,7 +782,7 @@ site.com/edit/news/:id
 site.com/view/news/:id
 
 ##### Add Routes to chp/src/chp/handler.clj
-```bash
+```
 ```clojure
 (:require [chp.routes.news :refer [news-table-routes]])
 
